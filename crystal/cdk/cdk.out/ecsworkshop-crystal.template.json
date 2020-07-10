@@ -1,0 +1,239 @@
+{
+  "Resources": {
+    "TaskDefTaskRole1EDB4A67": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ecs-tasks.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-crystal/TaskDef/TaskRole/Resource"
+      }
+    },
+    "TaskDefTaskRoleDefaultPolicyA592CB18": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "ec2:DescribeSubnets",
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "TaskDefTaskRoleDefaultPolicyA592CB18",
+        "Roles": [
+          {
+            "Ref": "TaskDefTaskRole1EDB4A67"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-crystal/TaskDef/TaskRole/DefaultPolicy/Resource"
+      }
+    },
+    "TaskDef54694570": {
+      "Type": "AWS::ECS::TaskDefinition",
+      "Properties": {
+        "ContainerDefinitions": [
+          {
+            "Environment": [
+              {
+                "Name": "REGION",
+                "Value": "us-west-1"
+              }
+            ],
+            "Essential": true,
+            "Image": "adam9098/ecsdemo-crystal",
+            "LogConfiguration": {
+              "LogDriver": "awslogs",
+              "Options": {
+                "awslogs-group": {
+                  "Ref": "TaskDefCrystalServiceContainerDefLogGroup54B26293"
+                },
+                "awslogs-stream-prefix": "ecsworkshop-crystal",
+                "awslogs-region": "us-west-1"
+              }
+            },
+            "MemoryReservation": 512,
+            "Name": "CrystalServiceContainerDef",
+            "PortMappings": [
+              {
+                "ContainerPort": 3000,
+                "Protocol": "tcp"
+              }
+            ]
+          }
+        ],
+        "Cpu": "256",
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
+            "TaskDefExecutionRoleB4775C97",
+            "Arn"
+          ]
+        },
+        "Family": "ecsworkshopcrystalTaskDefAEA199B7",
+        "Memory": "512",
+        "NetworkMode": "awsvpc",
+        "RequiresCompatibilities": [
+          "EC2",
+          "FARGATE"
+        ],
+        "TaskRoleArn": {
+          "Fn::GetAtt": [
+            "TaskDefTaskRole1EDB4A67",
+            "Arn"
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-crystal/TaskDef/Resource"
+      }
+    },
+    "TaskDefCrystalServiceContainerDefLogGroup54B26293": {
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Retain",
+      "DeletionPolicy": "Retain",
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-crystal/TaskDef/CrystalServiceContainerDef/LogGroup/Resource"
+      }
+    },
+    "TaskDefExecutionRoleB4775C97": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ecs-tasks.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-crystal/TaskDef/ExecutionRole/Resource"
+      }
+    },
+    "TaskDefExecutionRoleDefaultPolicy0DBB737A": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "TaskDefCrystalServiceContainerDefLogGroup54B26293",
+                  "Arn"
+                ]
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "TaskDefExecutionRoleDefaultPolicy0DBB737A",
+        "Roles": [
+          {
+            "Ref": "TaskDefExecutionRoleB4775C97"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-crystal/TaskDef/ExecutionRole/DefaultPolicy/Resource"
+      }
+    },
+    "CrystalFargateServiceA6A23262": {
+      "Type": "AWS::ECS::Service",
+      "Properties": {
+        "Cluster": {
+          "Fn::ImportValue": "ECSClusterName"
+        },
+        "DeploymentConfiguration": {
+          "MaximumPercent": 200,
+          "MinimumHealthyPercent": 50
+        },
+        "DesiredCount": 3,
+        "EnableECSManagedTags": false,
+        "LaunchType": "FARGATE",
+        "NetworkConfiguration": {
+          "AwsvpcConfiguration": {
+            "AssignPublicIp": "DISABLED",
+            "SecurityGroups": [
+              {
+                "Fn::ImportValue": "ServicesSecGrp"
+              }
+            ],
+            "Subnets": [
+              "subnet-06edaab92837bf818",
+              "subnet-01e13cf6b1ec8718c"
+            ]
+          }
+        },
+        "ServiceName": "ecsdemo-crystal",
+        "ServiceRegistries": [
+          {
+            "RegistryArn": {
+              "Fn::GetAtt": [
+                "CrystalFargateServiceCloudmapService45F6223E",
+                "Arn"
+              ]
+            }
+          }
+        ],
+        "TaskDefinition": {
+          "Ref": "TaskDef54694570"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-crystal/CrystalFargateService/Service"
+      }
+    },
+    "CrystalFargateServiceCloudmapService45F6223E": {
+      "Type": "AWS::ServiceDiscovery::Service",
+      "Properties": {
+        "DnsConfig": {
+          "DnsRecords": [
+            {
+              "TTL": 60,
+              "Type": "A"
+            }
+          ],
+          "NamespaceId": {
+            "Fn::ImportValue": "NSID"
+          },
+          "RoutingPolicy": "MULTIVALUE"
+        },
+        "HealthCheckCustomConfig": {
+          "FailureThreshold": 1
+        },
+        "Name": "ecsdemo-crystal",
+        "NamespaceId": {
+          "Fn::ImportValue": "NSID"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-crystal/CrystalFargateService/CloudmapService/Resource"
+      }
+    }
+  }
+}

@@ -1,0 +1,472 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree"
+      },
+      "ecsworkshop-capacityproviders-ec2": {
+        "id": "ecsworkshop-capacityproviders-ec2",
+        "path": "ecsworkshop-capacityproviders-ec2",
+        "children": {
+          "ecsworkshop-capacityproviders-ec2": {
+            "id": "ecsworkshop-capacityproviders-ec2",
+            "path": "ecsworkshop-capacityproviders-ec2/ecsworkshop-capacityproviders-ec2",
+            "children": {
+              "VPC": {
+                "id": "VPC",
+                "path": "ecsworkshop-capacityproviders-ec2/ecsworkshop-capacityproviders-ec2/VPC",
+                "children": {
+                  "PublicSubnet1": {
+                    "id": "PublicSubnet1",
+                    "path": "ecsworkshop-capacityproviders-ec2/ecsworkshop-capacityproviders-ec2/VPC/PublicSubnet1"
+                  },
+                  "PublicSubnet2": {
+                    "id": "PublicSubnet2",
+                    "path": "ecsworkshop-capacityproviders-ec2/ecsworkshop-capacityproviders-ec2/VPC/PublicSubnet2"
+                  },
+                  "PrivateSubnet1": {
+                    "id": "PrivateSubnet1",
+                    "path": "ecsworkshop-capacityproviders-ec2/ecsworkshop-capacityproviders-ec2/VPC/PrivateSubnet1"
+                  },
+                  "PrivateSubnet2": {
+                    "id": "PrivateSubnet2",
+                    "path": "ecsworkshop-capacityproviders-ec2/ecsworkshop-capacityproviders-ec2/VPC/PrivateSubnet2"
+                  }
+                }
+              },
+              "SDNamespace": {
+                "id": "SDNamespace",
+                "path": "ecsworkshop-capacityproviders-ec2/ecsworkshop-capacityproviders-ec2/SDNamespace"
+              },
+              "ClusterSecGrp": {
+                "id": "ClusterSecGrp",
+                "path": "ecsworkshop-capacityproviders-ec2/ecsworkshop-capacityproviders-ec2/ClusterSecGrp",
+                "children": {
+                  "from ecsworkshopcapacityprovidersec2EC2CapacityProviderServiceLBSecurityGroup97DF3EC1:32768-65535": {
+                    "id": "from ecsworkshopcapacityprovidersec2EC2CapacityProviderServiceLBSecurityGroup97DF3EC1:32768-65535",
+                    "path": "ecsworkshop-capacityproviders-ec2/ecsworkshop-capacityproviders-ec2/ClusterSecGrp/from ecsworkshopcapacityprovidersec2EC2CapacityProviderServiceLBSecurityGroup97DF3EC1:32768-65535",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroupIngress",
+                      "aws:cdk:cloudformation:props": {
+                        "ipProtocol": "tcp",
+                        "description": "Load balancer to target",
+                        "fromPort": 32768,
+                        "groupId": {
+                          "Fn::ImportValue": "ECSSecGrpList"
+                        },
+                        "sourceSecurityGroupId": {
+                          "Fn::GetAtt": [
+                            "EC2CapacityProviderServiceLBSecurityGroup1FC0A81A",
+                            "GroupId"
+                          ]
+                        },
+                        "toPort": 65535
+                      }
+                    }
+                  }
+                }
+              },
+              "ECSCluster": {
+                "id": "ECSCluster",
+                "path": "ecsworkshop-capacityproviders-ec2/ecsworkshop-capacityproviders-ec2/ECSCluster"
+              }
+            }
+          },
+          "EC2CapacityProviderService": {
+            "id": "EC2CapacityProviderService",
+            "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService",
+            "children": {
+              "LB": {
+                "id": "LB",
+                "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/LB",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/LB/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+                      "aws:cdk:cloudformation:props": {
+                        "scheme": "internet-facing",
+                        "securityGroups": [
+                          {
+                            "Fn::GetAtt": [
+                              "EC2CapacityProviderServiceLBSecurityGroup1FC0A81A",
+                              "GroupId"
+                            ]
+                          }
+                        ],
+                        "subnets": [
+                          "subnet-03689657e2849a8fc",
+                          "subnet-051f9ae27f68f8f74"
+                        ],
+                        "type": "application"
+                      }
+                    }
+                  },
+                  "SecurityGroup": {
+                    "id": "SecurityGroup",
+                    "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/LB/SecurityGroup",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/LB/SecurityGroup/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                          "aws:cdk:cloudformation:props": {
+                            "groupDescription": "Automatically created Security Group for ELB ecsworkshopcapacityprovidersec2EC2CapacityProviderServiceLBDD157FE0",
+                            "securityGroupIngress": [
+                              {
+                                "cidrIp": "0.0.0.0/0",
+                                "ipProtocol": "tcp",
+                                "fromPort": 80,
+                                "toPort": 80,
+                                "description": "Allow from anyone on port 80"
+                              }
+                            ],
+                            "vpcId": "vpc-0cad99f4a01936d39"
+                          }
+                        }
+                      },
+                      "to ecsworkshopcapacityprovidersec2ClusterSecGrp2FAA1878:32768-65535": {
+                        "id": "to ecsworkshopcapacityprovidersec2ClusterSecGrp2FAA1878:32768-65535",
+                        "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/LB/SecurityGroup/to ecsworkshopcapacityprovidersec2ClusterSecGrp2FAA1878:32768-65535",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroupEgress",
+                          "aws:cdk:cloudformation:props": {
+                            "groupId": {
+                              "Fn::GetAtt": [
+                                "EC2CapacityProviderServiceLBSecurityGroup1FC0A81A",
+                                "GroupId"
+                              ]
+                            },
+                            "ipProtocol": "tcp",
+                            "description": "Load balancer to target",
+                            "destinationSecurityGroupId": {
+                              "Fn::ImportValue": "ECSSecGrpList"
+                            },
+                            "fromPort": 32768,
+                            "toPort": 65535
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "PublicListener": {
+                    "id": "PublicListener",
+                    "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/LB/PublicListener",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/LB/PublicListener/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ElasticLoadBalancingV2::Listener",
+                          "aws:cdk:cloudformation:props": {
+                            "defaultActions": [
+                              {
+                                "type": "forward",
+                                "targetGroupArn": {
+                                  "Ref": "EC2CapacityProviderServiceLBPublicListenerECSGroupFB7C9653"
+                                }
+                              }
+                            ],
+                            "loadBalancerArn": {
+                              "Ref": "EC2CapacityProviderServiceLBDC92E31F"
+                            },
+                            "port": 80,
+                            "protocol": "HTTP"
+                          }
+                        }
+                      },
+                      "ECSGroup": {
+                        "id": "ECSGroup",
+                        "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/LB/PublicListener/ECSGroup",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/LB/PublicListener/ECSGroup/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+                              "aws:cdk:cloudformation:props": {
+                                "port": 80,
+                                "protocol": "HTTP",
+                                "targetType": "instance",
+                                "vpcId": "vpc-0cad99f4a01936d39"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "LoadBalancerDNS": {
+                "id": "LoadBalancerDNS",
+                "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/LoadBalancerDNS"
+              },
+              "ServiceURL": {
+                "id": "ServiceURL",
+                "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/ServiceURL"
+              },
+              "TaskDef": {
+                "id": "TaskDef",
+                "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/TaskDef",
+                "children": {
+                  "TaskRole": {
+                    "id": "TaskRole",
+                    "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/TaskDef/TaskRole",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/TaskDef/TaskRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "ecs-tasks.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/TaskDef/TaskRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/TaskDef/TaskRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "ecs:ListTasks",
+                                        "ecs:DescribeTasks"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "EC2CapacityProviderServiceTaskDefTaskRoleDefaultPolicyD8AD577A",
+                                "roles": [
+                                  {
+                                    "Ref": "EC2CapacityProviderServiceTaskDefTaskRoleE63CB5D4"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/TaskDef/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ECS::TaskDefinition",
+                      "aws:cdk:cloudformation:props": {
+                        "containerDefinitions": [
+                          {
+                            "cpu": 256,
+                            "essential": true,
+                            "image": "adam9098/ecsdemo-capacityproviders:latest",
+                            "memory": 512,
+                            "name": "web",
+                            "portMappings": [
+                              {
+                                "containerPort": 5000,
+                                "hostPort": 0,
+                                "protocol": "tcp"
+                              }
+                            ],
+                            "logConfiguration": {
+                              "logDriver": "awslogs",
+                              "options": {
+                                "awslogs-group": {
+                                  "Ref": "EC2CapacityProviderServiceTaskDefwebLogGroupADF50DEA"
+                                },
+                                "awslogs-stream-prefix": "EC2CapacityProviderService",
+                                "awslogs-region": "us-west-1"
+                              }
+                            },
+                            "environment": [
+                              {
+                                "name": "AWS_DEFAULT_REGION",
+                                "value": "us-west-1"
+                              }
+                            ]
+                          }
+                        ],
+                        "executionRoleArn": {
+                          "Fn::GetAtt": [
+                            "EC2CapacityProviderServiceTaskDefExecutionRole8EC4417E",
+                            "Arn"
+                          ]
+                        },
+                        "family": "ecsworkshopcapacityprovidersec2EC2CapacityProviderServiceTaskDef68AF634B",
+                        "networkMode": "bridge",
+                        "requiresCompatibilities": [
+                          "EC2"
+                        ],
+                        "taskRoleArn": {
+                          "Fn::GetAtt": [
+                            "EC2CapacityProviderServiceTaskDefTaskRoleE63CB5D4",
+                            "Arn"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "web": {
+                    "id": "web",
+                    "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/TaskDef/web",
+                    "children": {
+                      "LogGroup": {
+                        "id": "LogGroup",
+                        "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/TaskDef/web/LogGroup",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/TaskDef/web/LogGroup/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
+                              "aws:cdk:cloudformation:props": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "ExecutionRole": {
+                    "id": "ExecutionRole",
+                    "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/TaskDef/ExecutionRole",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/TaskDef/ExecutionRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "ecs-tasks.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/TaskDef/ExecutionRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/TaskDef/ExecutionRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "logs:CreateLogStream",
+                                        "logs:PutLogEvents"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": {
+                                        "Fn::GetAtt": [
+                                          "EC2CapacityProviderServiceTaskDefwebLogGroupADF50DEA",
+                                          "Arn"
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "EC2CapacityProviderServiceTaskDefExecutionRoleDefaultPolicyECD3E026",
+                                "roles": [
+                                  {
+                                    "Ref": "EC2CapacityProviderServiceTaskDefExecutionRole8EC4417E"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "Service": {
+                "id": "Service",
+                "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/Service",
+                "children": {
+                  "Service": {
+                    "id": "Service",
+                    "path": "ecsworkshop-capacityproviders-ec2/EC2CapacityProviderService/Service/Service",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ECS::Service",
+                      "aws:cdk:cloudformation:props": {
+                        "cluster": {
+                          "Fn::ImportValue": "ECSClusterName"
+                        },
+                        "deploymentConfiguration": {
+                          "maximumPercent": 200,
+                          "minimumHealthyPercent": 50
+                        },
+                        "desiredCount": 1,
+                        "enableEcsManagedTags": false,
+                        "healthCheckGracePeriodSeconds": 60,
+                        "launchType": "EC2",
+                        "loadBalancers": [
+                          {
+                            "targetGroupArn": {
+                              "Ref": "EC2CapacityProviderServiceLBPublicListenerECSGroupFB7C9653"
+                            },
+                            "containerName": "web",
+                            "containerPort": 5000
+                          }
+                        ],
+                        "schedulingStrategy": "REPLICA",
+                        "serviceName": "ecsdemo-capacityproviders-ec2",
+                        "taskDefinition": {
+                          "Ref": "EC2CapacityProviderServiceTaskDefEF5CC3D5"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

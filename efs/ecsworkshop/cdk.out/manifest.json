@@ -1,0 +1,460 @@
+{
+  "version": "4.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "ecsworkshop-efs-fargate-demo": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://334824919609/us-west-1",
+      "properties": {
+        "templateFile": "ecsworkshop-efs-fargate-demo.template.json"
+      },
+      "metadata": {
+        "/ecsworkshop-efs-fargate-demo/FrontendIngress/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FrontendIngressE0C42D30",
+            "trace": [
+              "new SecurityGroup (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/security-group.js:173:30)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/ALB/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ALBAEE750D2",
+            "trace": [
+              "new BaseLoadBalancer (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-elasticloadbalancingv2/lib/shared/base-load-balancer.js:24:26)",
+              "new ApplicationLoadBalancer (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-elasticloadbalancingv2/lib/alb/application-load-balancer.js:15:9)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/ALB/FrontendListener/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ALBFrontendListenerD31C403C",
+            "trace": [
+              "new BaseListener (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-elasticloadbalancingv2/lib/shared/base-listener.js:11:26)",
+              "new ApplicationListener (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-elasticloadbalancingv2/lib/alb/application-listener.js:24:9)",
+              "ApplicationLoadBalancer.addListener (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-elasticloadbalancingv2/lib/alb/application-load-balancer.js:43:16)",
+              "_wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7739:51)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "ret._ensureSync (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7739:25)",
+              "Kernel._ensureSync (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8364:20)",
+              "Kernel.invoke (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7738:26)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/ALBTG/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ALBTG3A6B6730",
+            "trace": [
+              "new TargetGroupBase (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-elasticloadbalancingv2/lib/shared/base-target-group.js:31:25)",
+              "new ApplicationTargetGroup (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-elasticloadbalancingv2/lib/alb/application-target-group.js:15:9)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/EFSSecGrp/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EFSSecGrp88EB04A2",
+            "trace": [
+              "new SecurityGroup (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/security-group.js:173:30)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/EFSSecGrp/from ecsworkshopefsfargatedemoEFSSecGrpE158E105:Self": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EFSSecGrpfromecsworkshopefsfargatedemoEFSSecGrpE158E105Self46DA38E3",
+            "trace": [
+              "SecurityGroup.addIngressRule (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/security-group.js:33:13)",
+              "SecurityGroup.addIngressRule (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/security-group.js:223:19)",
+              "other.connections._securityGroupRules.forEachAndForever.rule (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/connections.js:89:31)",
+              "ReactiveList.forEachAndForever (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/connections.js:191:13)",
+              "_securityGroups.forEachAndForever.securityGroup (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/connections.js:88:51)",
+              "ReactiveList.forEachAndForever (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/connections.js:191:13)",
+              "Connections.allowFrom (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/connections.js:87:30)",
+              "_wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7739:51)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "ret._ensureSync (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7739:25)",
+              "Kernel._ensureSync (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8364:20)",
+              "Kernel.invoke (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7738:26)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/EFSSecGrp/from ecsworkshopefsfargatedemoFrontendIngressA2A9E28C:LB2Service": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EFSSecGrpfromecsworkshopefsfargatedemoFrontendIngressA2A9E28CLB2Service5742CF64",
+            "trace": [
+              "SecurityGroup.addIngressRule (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/security-group.js:33:13)",
+              "SecurityGroup.addIngressRule (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/security-group.js:223:19)",
+              "other.connections._securityGroupRules.forEachAndForever.rule (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/connections.js:89:31)",
+              "ReactiveList.forEachAndForever (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/connections.js:191:13)",
+              "_securityGroups.forEachAndForever.securityGroup (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/connections.js:88:51)",
+              "ReactiveList.forEachAndForever (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/connections.js:191:13)",
+              "Connections.allowFrom (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-ec2/lib/connections.js:87:30)",
+              "_wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7739:51)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "ret._ensureSync (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7739:25)",
+              "Kernel._ensureSync (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8364:20)",
+              "Kernel.invoke (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7738:26)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/SharedFS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SharedFSFEA07D92",
+            "trace": [
+              "new FileSystem (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-efs/lib/efs-file-system.js:89:28)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/SharedFS/EfsMountTarget1": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SharedFSEfsMountTarget1B303F353",
+            "trace": [
+              "FileSystem.subnets.subnetIds.forEach (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-efs/lib/efs-file-system.js:112:13)",
+              "Array.forEach (<anonymous>)",
+              "new FileSystem (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-efs/lib/efs-file-system.js:111:27)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/SharedFS/EfsMountTarget2": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SharedFSEfsMountTarget23C1F7D8F",
+            "trace": [
+              "FileSystem.subnets.subnetIds.forEach (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-efs/lib/efs-file-system.js:112:13)",
+              "Array.forEach (<anonymous>)",
+              "new FileSystem (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-efs/lib/efs-file-system.js:111:27)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/TaskExecutionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TaskExecutionRole250D2532",
+            "trace": [
+              "new Role (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-iam/lib/role.js:41:22)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/ECSEFSDemoLogGrp/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ECSEFSDemoLogGrp0DC4BB87",
+            "trace": [
+              "new LogGroup (/tmp/jsii-kernel-iTgmZk/node_modules/@aws-cdk/aws-logs/lib/log-group.js:191:26)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/ExecutionRoleARN": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExecutionRoleARN",
+            "trace": [
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/EFSID": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EFSID",
+            "trace": [
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/LBName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LBName",
+            "trace": [
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/TargetGroupArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TargetGroupArn",
+            "trace": [
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/VPCPrivateSubnets": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "VPCPrivateSubnets",
+            "trace": [
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/SecurityGroups": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SecurityGroups",
+            "trace": [
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/LBURL": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LBURL",
+            "trace": [
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/ecsworkshop-efs-fargate-demo/LogGroupName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogGroupName",
+            "trace": [
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8388:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7915:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7659:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7439:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7377:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7380:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "runtime": {
+    "libraries": {
+      "@aws-cdk/cdk-assets-schema": "1.41.0",
+      "@aws-cdk/cloud-assembly-schema": "1.41.0",
+      "@aws-cdk/cx-api": "1.41.0",
+      "@aws-cdk/core": "1.41.0",
+      "@aws-cdk/region-info": "1.41.0",
+      "@aws-cdk/aws-iam": "1.41.0",
+      "@aws-cdk/aws-autoscaling-common": "1.41.0",
+      "@aws-cdk/aws-cloudwatch": "1.41.0",
+      "@aws-cdk/aws-applicationautoscaling": "1.41.0",
+      "@aws-cdk/aws-logs": "1.41.0",
+      "@aws-cdk/aws-events": "1.41.0",
+      "@aws-cdk/aws-kms": "1.41.0",
+      "@aws-cdk/aws-s3": "1.41.0",
+      "@aws-cdk/aws-ssm": "1.41.0",
+      "@aws-cdk/aws-ec2": "1.41.0",
+      "@aws-cdk/aws-elasticloadbalancing": "1.41.0",
+      "@aws-cdk/assets": "1.41.0",
+      "@aws-cdk/aws-s3-assets": "1.41.0",
+      "@aws-cdk/aws-sqs": "1.41.0",
+      "@aws-cdk/aws-lambda": "1.41.0",
+      "@aws-cdk/aws-route53": "1.41.0",
+      "@aws-cdk/aws-certificatemanager": "1.41.0",
+      "@aws-cdk/aws-elasticloadbalancingv2": "1.41.0",
+      "@aws-cdk/aws-sns": "1.41.0",
+      "@aws-cdk/aws-autoscaling": "1.41.0",
+      "@aws-cdk/aws-sns-subscriptions": "1.41.0",
+      "@aws-cdk/aws-autoscaling-hooktargets": "1.41.0",
+      "@aws-cdk/aws-cloudformation": "1.41.0",
+      "@aws-cdk/custom-resources": "1.41.0",
+      "@aws-cdk/aws-ecr": "1.41.0",
+      "@aws-cdk/aws-ecr-assets": "1.41.0",
+      "@aws-cdk/aws-apigateway": "1.41.0",
+      "@aws-cdk/aws-cloudfront": "1.41.0",
+      "@aws-cdk/aws-cognito": "1.41.0",
+      "@aws-cdk/aws-route53-targets": "1.41.0",
+      "@aws-cdk/aws-sam": "1.41.0",
+      "@aws-cdk/aws-secretsmanager": "1.41.0",
+      "@aws-cdk/aws-servicediscovery": "1.41.0",
+      "@aws-cdk/aws-ecs": "1.41.0",
+      "@aws-cdk/aws-efs": "1.41.0",
+      "jsii-runtime": "Python/3.6.10"
+    }
+  }
+}

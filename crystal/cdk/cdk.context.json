@@ -1,0 +1,45 @@
+{
+  "vpc-provider:account=334824919609:filter.tag:Name=ecsworkshop-base/BaseVPC:region=us-west-1:returnAsymmetricSubnets=true": {
+    "vpcId": "vpc-0cad99f4a01936d39",
+    "vpcCidrBlock": "10.0.0.0/24",
+    "availabilityZones": [],
+    "subnetGroups": [
+      {
+        "name": "Private",
+        "type": "Private",
+        "subnets": [
+          {
+            "subnetId": "subnet-06edaab92837bf818",
+            "cidr": "10.0.0.128/26",
+            "availabilityZone": "us-west-1a",
+            "routeTableId": "rtb-0aaa7f1ed96717b22"
+          },
+          {
+            "subnetId": "subnet-01e13cf6b1ec8718c",
+            "cidr": "10.0.0.192/26",
+            "availabilityZone": "us-west-1b",
+            "routeTableId": "rtb-08b4de00acde43ca3"
+          }
+        ]
+      },
+      {
+        "name": "Public",
+        "type": "Public",
+        "subnets": [
+          {
+            "subnetId": "subnet-03689657e2849a8fc",
+            "cidr": "10.0.0.0/26",
+            "availabilityZone": "us-west-1a",
+            "routeTableId": "rtb-0a67d076dabdb8276"
+          },
+          {
+            "subnetId": "subnet-051f9ae27f68f8f74",
+            "cidr": "10.0.0.64/26",
+            "availabilityZone": "us-west-1b",
+            "routeTableId": "rtb-05996412d66b2e16d"
+          }
+        ]
+      }
+    ]
+  }
+}

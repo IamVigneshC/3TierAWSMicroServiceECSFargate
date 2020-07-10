@@ -1,0 +1,510 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree"
+      },
+      "ecsworkshop-capacityproviders-fargate": {
+        "id": "ecsworkshop-capacityproviders-fargate",
+        "path": "ecsworkshop-capacityproviders-fargate",
+        "children": {
+          "ecsworkshop-capacityproviders-fargate": {
+            "id": "ecsworkshop-capacityproviders-fargate",
+            "path": "ecsworkshop-capacityproviders-fargate/ecsworkshop-capacityproviders-fargate",
+            "children": {
+              "VPC": {
+                "id": "VPC",
+                "path": "ecsworkshop-capacityproviders-fargate/ecsworkshop-capacityproviders-fargate/VPC",
+                "children": {
+                  "PublicSubnet1": {
+                    "id": "PublicSubnet1",
+                    "path": "ecsworkshop-capacityproviders-fargate/ecsworkshop-capacityproviders-fargate/VPC/PublicSubnet1"
+                  },
+                  "PublicSubnet2": {
+                    "id": "PublicSubnet2",
+                    "path": "ecsworkshop-capacityproviders-fargate/ecsworkshop-capacityproviders-fargate/VPC/PublicSubnet2"
+                  },
+                  "PrivateSubnet1": {
+                    "id": "PrivateSubnet1",
+                    "path": "ecsworkshop-capacityproviders-fargate/ecsworkshop-capacityproviders-fargate/VPC/PrivateSubnet1"
+                  },
+                  "PrivateSubnet2": {
+                    "id": "PrivateSubnet2",
+                    "path": "ecsworkshop-capacityproviders-fargate/ecsworkshop-capacityproviders-fargate/VPC/PrivateSubnet2"
+                  }
+                }
+              },
+              "SDNamespace": {
+                "id": "SDNamespace",
+                "path": "ecsworkshop-capacityproviders-fargate/ecsworkshop-capacityproviders-fargate/SDNamespace"
+              },
+              "ClusterSecGrp": {
+                "id": "ClusterSecGrp",
+                "path": "ecsworkshop-capacityproviders-fargate/ecsworkshop-capacityproviders-fargate/ClusterSecGrp"
+              },
+              "ECSCluster": {
+                "id": "ECSCluster",
+                "path": "ecsworkshop-capacityproviders-fargate/ecsworkshop-capacityproviders-fargate/ECSCluster"
+              }
+            }
+          },
+          "FargateCapacityProviderService": {
+            "id": "FargateCapacityProviderService",
+            "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService",
+            "children": {
+              "LB": {
+                "id": "LB",
+                "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/LB",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/LB/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+                      "aws:cdk:cloudformation:props": {
+                        "scheme": "internet-facing",
+                        "securityGroups": [
+                          {
+                            "Fn::GetAtt": [
+                              "FargateCapacityProviderServiceLBSecurityGroupA31B6195",
+                              "GroupId"
+                            ]
+                          }
+                        ],
+                        "subnets": [
+                          "subnet-03689657e2849a8fc",
+                          "subnet-051f9ae27f68f8f74"
+                        ],
+                        "type": "application"
+                      }
+                    }
+                  },
+                  "SecurityGroup": {
+                    "id": "SecurityGroup",
+                    "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/LB/SecurityGroup",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/LB/SecurityGroup/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                          "aws:cdk:cloudformation:props": {
+                            "groupDescription": "Automatically created Security Group for ELB ecsworkshopcapacityprovidersfargateFargateCapacityProviderServiceLBE252483E",
+                            "securityGroupIngress": [
+                              {
+                                "cidrIp": "0.0.0.0/0",
+                                "ipProtocol": "tcp",
+                                "fromPort": 80,
+                                "toPort": 80,
+                                "description": "Allow from anyone on port 80"
+                              }
+                            ],
+                            "vpcId": "vpc-0cad99f4a01936d39"
+                          }
+                        }
+                      },
+                      "to ecsworkshopcapacityprovidersfargateFargateCapacityProviderServiceSecurityGroup90410566:5000": {
+                        "id": "to ecsworkshopcapacityprovidersfargateFargateCapacityProviderServiceSecurityGroup90410566:5000",
+                        "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/LB/SecurityGroup/to ecsworkshopcapacityprovidersfargateFargateCapacityProviderServiceSecurityGroup90410566:5000",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroupEgress",
+                          "aws:cdk:cloudformation:props": {
+                            "groupId": {
+                              "Fn::GetAtt": [
+                                "FargateCapacityProviderServiceLBSecurityGroupA31B6195",
+                                "GroupId"
+                              ]
+                            },
+                            "ipProtocol": "tcp",
+                            "description": "Load balancer to target",
+                            "destinationSecurityGroupId": {
+                              "Fn::GetAtt": [
+                                "FargateCapacityProviderServiceSecurityGroupF0D9098B",
+                                "GroupId"
+                              ]
+                            },
+                            "fromPort": 5000,
+                            "toPort": 5000
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "PublicListener": {
+                    "id": "PublicListener",
+                    "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/LB/PublicListener",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/LB/PublicListener/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ElasticLoadBalancingV2::Listener",
+                          "aws:cdk:cloudformation:props": {
+                            "defaultActions": [
+                              {
+                                "type": "forward",
+                                "targetGroupArn": {
+                                  "Ref": "FargateCapacityProviderServiceLBPublicListenerECSGroup64EDCBC8"
+                                }
+                              }
+                            ],
+                            "loadBalancerArn": {
+                              "Ref": "FargateCapacityProviderServiceLB3C8F1707"
+                            },
+                            "port": 80,
+                            "protocol": "HTTP"
+                          }
+                        }
+                      },
+                      "ECSGroup": {
+                        "id": "ECSGroup",
+                        "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/LB/PublicListener/ECSGroup",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/LB/PublicListener/ECSGroup/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+                              "aws:cdk:cloudformation:props": {
+                                "port": 80,
+                                "protocol": "HTTP",
+                                "targetType": "ip",
+                                "vpcId": "vpc-0cad99f4a01936d39"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "LoadBalancerDNS": {
+                "id": "LoadBalancerDNS",
+                "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/LoadBalancerDNS"
+              },
+              "ServiceURL": {
+                "id": "ServiceURL",
+                "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/ServiceURL"
+              },
+              "TaskDef": {
+                "id": "TaskDef",
+                "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/TaskDef",
+                "children": {
+                  "TaskRole": {
+                    "id": "TaskRole",
+                    "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/TaskDef/TaskRole",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/TaskDef/TaskRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "ecs-tasks.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/TaskDef/TaskRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/TaskDef/TaskRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "ecs:ListTasks",
+                                        "ecs:DescribeTasks"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "FargateCapacityProviderServiceTaskDefTaskRoleDefaultPolicy88C80793",
+                                "roles": [
+                                  {
+                                    "Ref": "FargateCapacityProviderServiceTaskDefTaskRole240ABAF7"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/TaskDef/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ECS::TaskDefinition",
+                      "aws:cdk:cloudformation:props": {
+                        "containerDefinitions": [
+                          {
+                            "essential": true,
+                            "image": "adam9098/ecsdemo-capacityproviders:latest",
+                            "name": "web",
+                            "portMappings": [
+                              {
+                                "containerPort": 5000,
+                                "protocol": "tcp"
+                              }
+                            ],
+                            "logConfiguration": {
+                              "logDriver": "awslogs",
+                              "options": {
+                                "awslogs-group": {
+                                  "Ref": "FargateCapacityProviderServiceTaskDefwebLogGroup9A7D3AC7"
+                                },
+                                "awslogs-stream-prefix": "FargateCapacityProviderService",
+                                "awslogs-region": "us-west-1"
+                              }
+                            }
+                          }
+                        ],
+                        "cpu": "256",
+                        "executionRoleArn": {
+                          "Fn::GetAtt": [
+                            "FargateCapacityProviderServiceTaskDefExecutionRoleF572264B",
+                            "Arn"
+                          ]
+                        },
+                        "family": "ecsworkshopcapacityprovidersfargateFargateCapacityProviderServiceTaskDefCD43678C",
+                        "memory": "512",
+                        "networkMode": "awsvpc",
+                        "requiresCompatibilities": [
+                          "FARGATE"
+                        ],
+                        "taskRoleArn": {
+                          "Fn::GetAtt": [
+                            "FargateCapacityProviderServiceTaskDefTaskRole240ABAF7",
+                            "Arn"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "web": {
+                    "id": "web",
+                    "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/TaskDef/web",
+                    "children": {
+                      "LogGroup": {
+                        "id": "LogGroup",
+                        "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/TaskDef/web/LogGroup",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/TaskDef/web/LogGroup/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
+                              "aws:cdk:cloudformation:props": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "ExecutionRole": {
+                    "id": "ExecutionRole",
+                    "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/TaskDef/ExecutionRole",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/TaskDef/ExecutionRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "ecs-tasks.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/TaskDef/ExecutionRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/TaskDef/ExecutionRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "logs:CreateLogStream",
+                                        "logs:PutLogEvents"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": {
+                                        "Fn::GetAtt": [
+                                          "FargateCapacityProviderServiceTaskDefwebLogGroup9A7D3AC7",
+                                          "Arn"
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "FargateCapacityProviderServiceTaskDefExecutionRoleDefaultPolicy83908004",
+                                "roles": [
+                                  {
+                                    "Ref": "FargateCapacityProviderServiceTaskDefExecutionRoleF572264B"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "Service": {
+                "id": "Service",
+                "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/Service",
+                "children": {
+                  "Service": {
+                    "id": "Service",
+                    "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/Service/Service",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ECS::Service",
+                      "aws:cdk:cloudformation:props": {
+                        "cluster": {
+                          "Fn::ImportValue": "ECSClusterName"
+                        },
+                        "deploymentConfiguration": {
+                          "maximumPercent": 200,
+                          "minimumHealthyPercent": 50
+                        },
+                        "desiredCount": 10,
+                        "enableEcsManagedTags": false,
+                        "healthCheckGracePeriodSeconds": 60,
+                        "launchType": "FARGATE",
+                        "loadBalancers": [
+                          {
+                            "targetGroupArn": {
+                              "Ref": "FargateCapacityProviderServiceLBPublicListenerECSGroup64EDCBC8"
+                            },
+                            "containerName": "web",
+                            "containerPort": 5000
+                          }
+                        ],
+                        "networkConfiguration": {
+                          "awsvpcConfiguration": {
+                            "assignPublicIp": "DISABLED",
+                            "subnets": [
+                              "subnet-06edaab92837bf818",
+                              "subnet-01e13cf6b1ec8718c"
+                            ],
+                            "securityGroups": [
+                              {
+                                "Fn::GetAtt": [
+                                  "FargateCapacityProviderServiceSecurityGroupF0D9098B",
+                                  "GroupId"
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "platformVersion": "1.4.0",
+                        "serviceName": "ecsdemo-capacityproviders-fargate",
+                        "taskDefinition": {
+                          "Ref": "FargateCapacityProviderServiceTaskDefB0B80EC1"
+                        }
+                      }
+                    }
+                  },
+                  "SecurityGroup": {
+                    "id": "SecurityGroup",
+                    "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/Service/SecurityGroup",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/Service/SecurityGroup/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                          "aws:cdk:cloudformation:props": {
+                            "groupDescription": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/Service/SecurityGroup",
+                            "securityGroupEgress": [
+                              {
+                                "cidrIp": "0.0.0.0/0",
+                                "description": "Allow all outbound traffic by default",
+                                "ipProtocol": "-1"
+                              }
+                            ],
+                            "vpcId": "vpc-0cad99f4a01936d39"
+                          }
+                        }
+                      },
+                      "from ecsworkshopcapacityprovidersfargateFargateCapacityProviderServiceLBSecurityGroupE024A5C0:5000": {
+                        "id": "from ecsworkshopcapacityprovidersfargateFargateCapacityProviderServiceLBSecurityGroupE024A5C0:5000",
+                        "path": "ecsworkshop-capacityproviders-fargate/FargateCapacityProviderService/Service/SecurityGroup/from ecsworkshopcapacityprovidersfargateFargateCapacityProviderServiceLBSecurityGroupE024A5C0:5000",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroupIngress",
+                          "aws:cdk:cloudformation:props": {
+                            "ipProtocol": "tcp",
+                            "description": "Load balancer to target",
+                            "fromPort": 5000,
+                            "groupId": {
+                              "Fn::GetAtt": [
+                                "FargateCapacityProviderServiceSecurityGroupF0D9098B",
+                                "GroupId"
+                              ]
+                            },
+                            "sourceSecurityGroupId": {
+                              "Fn::GetAtt": [
+                                "FargateCapacityProviderServiceLBSecurityGroupA31B6195",
+                                "GroupId"
+                              ]
+                            },
+                            "toPort": 5000
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

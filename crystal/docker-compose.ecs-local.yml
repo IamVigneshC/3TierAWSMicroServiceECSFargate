@@ -1,0 +1,26 @@
+version: "3.4"
+services:
+  CrystalServiceContainerDef:
+    environment:
+      AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /creds
+      ECS_CONTAINER_METADATA_URI: http://169.254.170.2/v3
+      REGION: us-west-1
+    image: adam9098/ecsdemo-crystal
+    labels:
+      ecs-local.task-definition-input.type: remote
+      ecs-local.task-definition-input.value: arn:aws:ecs:us-west-1:334824919609:task-definition/ecsworkshopcrystalTaskDefAEA199B7:1
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: ecsworkshop-crystal-TaskDefCrystalServiceContainerDefLogGroup54B26293-PTTm88YtUzXK
+        awslogs-region: us-west-1
+        awslogs-stream-prefix: ecsworkshop-crystal
+    networks:
+      ecs-local-network: null
+    ports:
+    - target: 3000
+      published: 3000
+      protocol: tcp
+networks:
+  ecs-local-network:
+    external: true

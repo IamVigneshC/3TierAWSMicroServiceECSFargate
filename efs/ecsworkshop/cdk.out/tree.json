@@ -1,0 +1,379 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree"
+      },
+      "ecsworkshop-efs-fargate-demo": {
+        "id": "ecsworkshop-efs-fargate-demo",
+        "path": "ecsworkshop-efs-fargate-demo",
+        "children": {
+          "VPC": {
+            "id": "VPC",
+            "path": "ecsworkshop-efs-fargate-demo/VPC",
+            "children": {
+              "PublicSubnet1": {
+                "id": "PublicSubnet1",
+                "path": "ecsworkshop-efs-fargate-demo/VPC/PublicSubnet1"
+              },
+              "PublicSubnet2": {
+                "id": "PublicSubnet2",
+                "path": "ecsworkshop-efs-fargate-demo/VPC/PublicSubnet2"
+              },
+              "PrivateSubnet1": {
+                "id": "PrivateSubnet1",
+                "path": "ecsworkshop-efs-fargate-demo/VPC/PrivateSubnet1"
+              },
+              "PrivateSubnet2": {
+                "id": "PrivateSubnet2",
+                "path": "ecsworkshop-efs-fargate-demo/VPC/PrivateSubnet2"
+              }
+            }
+          },
+          "SDNamespace": {
+            "id": "SDNamespace",
+            "path": "ecsworkshop-efs-fargate-demo/SDNamespace"
+          },
+          "ECSCluster": {
+            "id": "ECSCluster",
+            "path": "ecsworkshop-efs-fargate-demo/ECSCluster"
+          },
+          "FrontendIngress": {
+            "id": "FrontendIngress",
+            "path": "ecsworkshop-efs-fargate-demo/FrontendIngress",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ecsworkshop-efs-fargate-demo/FrontendIngress/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                  "aws:cdk:cloudformation:props": {
+                    "groupDescription": "Frontend Ingress All port 80",
+                    "securityGroupEgress": [
+                      {
+                        "cidrIp": "0.0.0.0/0",
+                        "description": "Allow all outbound traffic by default",
+                        "ipProtocol": "-1"
+                      }
+                    ],
+                    "securityGroupIngress": [
+                      {
+                        "cidrIp": "0.0.0.0/0",
+                        "ipProtocol": "tcp",
+                        "fromPort": 80,
+                        "toPort": 80,
+                        "description": "Allow from anyone on port 80"
+                      }
+                    ],
+                    "vpcId": "vpc-0cad99f4a01936d39"
+                  }
+                }
+              }
+            }
+          },
+          "ALB": {
+            "id": "ALB",
+            "path": "ecsworkshop-efs-fargate-demo/ALB",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ecsworkshop-efs-fargate-demo/ALB/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+                  "aws:cdk:cloudformation:props": {
+                    "scheme": "internet-facing",
+                    "securityGroups": [
+                      {
+                        "Fn::GetAtt": [
+                          "FrontendIngressE0C42D30",
+                          "GroupId"
+                        ]
+                      }
+                    ],
+                    "subnets": [
+                      "subnet-03689657e2849a8fc",
+                      "subnet-051f9ae27f68f8f74"
+                    ],
+                    "type": "application"
+                  }
+                }
+              },
+              "FrontendListener": {
+                "id": "FrontendListener",
+                "path": "ecsworkshop-efs-fargate-demo/ALB/FrontendListener",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ecsworkshop-efs-fargate-demo/ALB/FrontendListener/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ElasticLoadBalancingV2::Listener",
+                      "aws:cdk:cloudformation:props": {
+                        "defaultActions": [
+                          {
+                            "type": "forward",
+                            "targetGroupArn": {
+                              "Ref": "ALBTG3A6B6730"
+                            }
+                          }
+                        ],
+                        "loadBalancerArn": {
+                          "Ref": "ALBAEE750D2"
+                        },
+                        "port": 80,
+                        "protocol": "HTTP"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "ALBTG": {
+            "id": "ALBTG",
+            "path": "ecsworkshop-efs-fargate-demo/ALBTG",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ecsworkshop-efs-fargate-demo/ALBTG/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+                  "aws:cdk:cloudformation:props": {
+                    "name": "ECSDemoFargateEFS",
+                    "port": 8000,
+                    "protocol": "HTTP",
+                    "targetType": "ip",
+                    "vpcId": "vpc-0cad99f4a01936d39"
+                  }
+                }
+              }
+            }
+          },
+          "EFSSecGrp": {
+            "id": "EFSSecGrp",
+            "path": "ecsworkshop-efs-fargate-demo/EFSSecGrp",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ecsworkshop-efs-fargate-demo/EFSSecGrp/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                  "aws:cdk:cloudformation:props": {
+                    "groupDescription": "Allow access to self on NFS Port",
+                    "securityGroupEgress": [
+                      {
+                        "cidrIp": "0.0.0.0/0",
+                        "description": "Allow all outbound traffic by default",
+                        "ipProtocol": "-1"
+                      }
+                    ],
+                    "vpcId": "vpc-0cad99f4a01936d39"
+                  }
+                }
+              },
+              "from ecsworkshopefsfargatedemoEFSSecGrpE158E105:Self": {
+                "id": "from ecsworkshopefsfargatedemoEFSSecGrpE158E105:Self",
+                "path": "ecsworkshop-efs-fargate-demo/EFSSecGrp/from ecsworkshopefsfargatedemoEFSSecGrpE158E105:Self",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroupIngress",
+                  "aws:cdk:cloudformation:props": {
+                    "ipProtocol": "tcp",
+                    "description": "from ecsworkshopefsfargatedemoEFSSecGrpE158E105:Self",
+                    "fromPort": 2049,
+                    "groupId": {
+                      "Fn::GetAtt": [
+                        "EFSSecGrp88EB04A2",
+                        "GroupId"
+                      ]
+                    },
+                    "sourceSecurityGroupId": {
+                      "Fn::GetAtt": [
+                        "EFSSecGrp88EB04A2",
+                        "GroupId"
+                      ]
+                    },
+                    "toPort": 2049
+                  }
+                }
+              },
+              "from ecsworkshopefsfargatedemoFrontendIngressA2A9E28C:LB2Service": {
+                "id": "from ecsworkshopefsfargatedemoFrontendIngressA2A9E28C:LB2Service",
+                "path": "ecsworkshop-efs-fargate-demo/EFSSecGrp/from ecsworkshopefsfargatedemoFrontendIngressA2A9E28C:LB2Service",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroupIngress",
+                  "aws:cdk:cloudformation:props": {
+                    "ipProtocol": "tcp",
+                    "description": "from ecsworkshopefsfargatedemoFrontendIngressA2A9E28C:LB2Service",
+                    "fromPort": 8000,
+                    "groupId": {
+                      "Fn::GetAtt": [
+                        "EFSSecGrp88EB04A2",
+                        "GroupId"
+                      ]
+                    },
+                    "sourceSecurityGroupId": {
+                      "Fn::GetAtt": [
+                        "FrontendIngressE0C42D30",
+                        "GroupId"
+                      ]
+                    },
+                    "toPort": 8000
+                  }
+                }
+              }
+            }
+          },
+          "SharedFS": {
+            "id": "SharedFS",
+            "path": "ecsworkshop-efs-fargate-demo/SharedFS",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ecsworkshop-efs-fargate-demo/SharedFS/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EFS::FileSystem",
+                  "aws:cdk:cloudformation:props": {
+                    "fileSystemTags": [
+                      {
+                        "key": "Name",
+                        "value": "ecsworkshop-efs-fargate-demo/SharedFS"
+                      }
+                    ]
+                  }
+                }
+              },
+              "EfsMountTarget1": {
+                "id": "EfsMountTarget1",
+                "path": "ecsworkshop-efs-fargate-demo/SharedFS/EfsMountTarget1",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EFS::MountTarget",
+                  "aws:cdk:cloudformation:props": {
+                    "fileSystemId": {
+                      "Ref": "SharedFSFEA07D92"
+                    },
+                    "securityGroups": [
+                      {
+                        "Fn::GetAtt": [
+                          "EFSSecGrp88EB04A2",
+                          "GroupId"
+                        ]
+                      }
+                    ],
+                    "subnetId": "subnet-06edaab92837bf818"
+                  }
+                }
+              },
+              "EfsMountTarget2": {
+                "id": "EfsMountTarget2",
+                "path": "ecsworkshop-efs-fargate-demo/SharedFS/EfsMountTarget2",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EFS::MountTarget",
+                  "aws:cdk:cloudformation:props": {
+                    "fileSystemId": {
+                      "Ref": "SharedFSFEA07D92"
+                    },
+                    "securityGroups": [
+                      {
+                        "Fn::GetAtt": [
+                          "EFSSecGrp88EB04A2",
+                          "GroupId"
+                        ]
+                      }
+                    ],
+                    "subnetId": "subnet-01e13cf6b1ec8718c"
+                  }
+                }
+              }
+            }
+          },
+          "arn": {
+            "id": "arn",
+            "path": "ecsworkshop-efs-fargate-demo/arn"
+          },
+          "TaskExecutionRole": {
+            "id": "TaskExecutionRole",
+            "path": "ecsworkshop-efs-fargate-demo/TaskExecutionRole",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ecsworkshop-efs-fargate-demo/TaskExecutionRole/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "ecs-tasks.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "description": "Task execution role for ecs services",
+                    "managedPolicyArns": [
+                      "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "ECSEFSDemoLogGrp": {
+            "id": "ECSEFSDemoLogGrp",
+            "path": "ecsworkshop-efs-fargate-demo/ECSEFSDemoLogGrp",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "ecsworkshop-efs-fargate-demo/ECSEFSDemoLogGrp/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
+                  "aws:cdk:cloudformation:props": {
+                    "retentionInDays": 731
+                  }
+                }
+              }
+            }
+          },
+          "ExecutionRoleARN": {
+            "id": "ExecutionRoleARN",
+            "path": "ecsworkshop-efs-fargate-demo/ExecutionRoleARN"
+          },
+          "EFSID": {
+            "id": "EFSID",
+            "path": "ecsworkshop-efs-fargate-demo/EFSID"
+          },
+          "LBName": {
+            "id": "LBName",
+            "path": "ecsworkshop-efs-fargate-demo/LBName"
+          },
+          "TargetGroupArn": {
+            "id": "TargetGroupArn",
+            "path": "ecsworkshop-efs-fargate-demo/TargetGroupArn"
+          },
+          "VPCPrivateSubnets": {
+            "id": "VPCPrivateSubnets",
+            "path": "ecsworkshop-efs-fargate-demo/VPCPrivateSubnets"
+          },
+          "SecurityGroups": {
+            "id": "SecurityGroups",
+            "path": "ecsworkshop-efs-fargate-demo/SecurityGroups"
+          },
+          "LBURL": {
+            "id": "LBURL",
+            "path": "ecsworkshop-efs-fargate-demo/LBURL"
+          },
+          "LogGroupName": {
+            "id": "LogGroupName",
+            "path": "ecsworkshop-efs-fargate-demo/LogGroupName"
+          }
+        }
+      }
+    }
+  }
+}

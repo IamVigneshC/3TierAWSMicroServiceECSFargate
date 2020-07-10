@@ -1,0 +1,1047 @@
+{
+  "Resources": {
+    "BaseVPCD45965B8": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": "10.0.0.0/24",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/BaseVPC"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/Resource"
+      }
+    },
+    "BaseVPCPublicSubnet1Subnet3A607EE2": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.0.0.0/26",
+        "VpcId": {
+          "Ref": "BaseVPCD45965B8"
+        },
+        "AvailabilityZone": "us-west-1a",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          },
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/BaseVPC/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PublicSubnet1/Subnet"
+      }
+    },
+    "BaseVPCPublicSubnet1RouteTableDD9C5642": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "BaseVPCD45965B8"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/BaseVPC/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PublicSubnet1/RouteTable"
+      }
+    },
+    "BaseVPCPublicSubnet1RouteTableAssociation52241D26": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "BaseVPCPublicSubnet1RouteTableDD9C5642"
+        },
+        "SubnetId": {
+          "Ref": "BaseVPCPublicSubnet1Subnet3A607EE2"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PublicSubnet1/RouteTableAssociation"
+      }
+    },
+    "BaseVPCPublicSubnet1DefaultRoute027C883F": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "BaseVPCPublicSubnet1RouteTableDD9C5642"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "BaseVPCIGWDCBB6967"
+        }
+      },
+      "DependsOn": [
+        "BaseVPCVPCGWB245CE93"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PublicSubnet1/DefaultRoute"
+      }
+    },
+    "BaseVPCPublicSubnet1EIP87086307": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/BaseVPC/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PublicSubnet1/EIP"
+      }
+    },
+    "BaseVPCPublicSubnet1NATGateway23160C86": {
+      "Type": "AWS::EC2::NatGateway",
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "BaseVPCPublicSubnet1EIP87086307",
+            "AllocationId"
+          ]
+        },
+        "SubnetId": {
+          "Ref": "BaseVPCPublicSubnet1Subnet3A607EE2"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/BaseVPC/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PublicSubnet1/NATGateway"
+      }
+    },
+    "BaseVPCPublicSubnet2Subnet1115E1D2": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.0.0.64/26",
+        "VpcId": {
+          "Ref": "BaseVPCD45965B8"
+        },
+        "AvailabilityZone": "us-west-1b",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          },
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/BaseVPC/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PublicSubnet2/Subnet"
+      }
+    },
+    "BaseVPCPublicSubnet2RouteTableF97FEF81": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "BaseVPCD45965B8"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/BaseVPC/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PublicSubnet2/RouteTable"
+      }
+    },
+    "BaseVPCPublicSubnet2RouteTableAssociationC59A8337": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "BaseVPCPublicSubnet2RouteTableF97FEF81"
+        },
+        "SubnetId": {
+          "Ref": "BaseVPCPublicSubnet2Subnet1115E1D2"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PublicSubnet2/RouteTableAssociation"
+      }
+    },
+    "BaseVPCPublicSubnet2DefaultRoute8E53C638": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "BaseVPCPublicSubnet2RouteTableF97FEF81"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "BaseVPCIGWDCBB6967"
+        }
+      },
+      "DependsOn": [
+        "BaseVPCVPCGWB245CE93"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PublicSubnet2/DefaultRoute"
+      }
+    },
+    "BaseVPCPublicSubnet2EIP9D3F1B06": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/BaseVPC/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PublicSubnet2/EIP"
+      }
+    },
+    "BaseVPCPublicSubnet2NATGateway6616AE08": {
+      "Type": "AWS::EC2::NatGateway",
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "BaseVPCPublicSubnet2EIP9D3F1B06",
+            "AllocationId"
+          ]
+        },
+        "SubnetId": {
+          "Ref": "BaseVPCPublicSubnet2Subnet1115E1D2"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/BaseVPC/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PublicSubnet2/NATGateway"
+      }
+    },
+    "BaseVPCPrivateSubnet1SubnetF99B1DA5": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.0.0.128/26",
+        "VpcId": {
+          "Ref": "BaseVPCD45965B8"
+        },
+        "AvailabilityZone": "us-west-1a",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private"
+          },
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/BaseVPC/PrivateSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PrivateSubnet1/Subnet"
+      }
+    },
+    "BaseVPCPrivateSubnet1RouteTable5B5DA874": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "BaseVPCD45965B8"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/BaseVPC/PrivateSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PrivateSubnet1/RouteTable"
+      }
+    },
+    "BaseVPCPrivateSubnet1RouteTableAssociation410EBFCB": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "BaseVPCPrivateSubnet1RouteTable5B5DA874"
+        },
+        "SubnetId": {
+          "Ref": "BaseVPCPrivateSubnet1SubnetF99B1DA5"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PrivateSubnet1/RouteTableAssociation"
+      }
+    },
+    "BaseVPCPrivateSubnet1DefaultRoute931CABB9": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "BaseVPCPrivateSubnet1RouteTable5B5DA874"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "BaseVPCPublicSubnet1NATGateway23160C86"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PrivateSubnet1/DefaultRoute"
+      }
+    },
+    "BaseVPCPrivateSubnet2Subnet88334406": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.0.0.192/26",
+        "VpcId": {
+          "Ref": "BaseVPCD45965B8"
+        },
+        "AvailabilityZone": "us-west-1b",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private"
+          },
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/BaseVPC/PrivateSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PrivateSubnet2/Subnet"
+      }
+    },
+    "BaseVPCPrivateSubnet2RouteTable7E52A55E": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "BaseVPCD45965B8"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/BaseVPC/PrivateSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PrivateSubnet2/RouteTable"
+      }
+    },
+    "BaseVPCPrivateSubnet2RouteTableAssociation7F742394": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "BaseVPCPrivateSubnet2RouteTable7E52A55E"
+        },
+        "SubnetId": {
+          "Ref": "BaseVPCPrivateSubnet2Subnet88334406"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PrivateSubnet2/RouteTableAssociation"
+      }
+    },
+    "BaseVPCPrivateSubnet2DefaultRoute8E8DFB45": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "BaseVPCPrivateSubnet2RouteTable7E52A55E"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "BaseVPCPublicSubnet2NATGateway6616AE08"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/PrivateSubnet2/DefaultRoute"
+      }
+    },
+    "BaseVPCIGWDCBB6967": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/BaseVPC"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/IGW"
+      }
+    },
+    "BaseVPCVPCGWB245CE93": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "VpcId": {
+          "Ref": "BaseVPCD45965B8"
+        },
+        "InternetGatewayId": {
+          "Ref": "BaseVPCIGWDCBB6967"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/BaseVPC/VPCGW"
+      }
+    },
+    "ECSCluster7D463CD4": {
+      "Type": "AWS::ECS::Cluster",
+      "Properties": {
+        "ClusterName": "container-demo"
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/Resource"
+      }
+    },
+    "ECSClusterDefaultServiceDiscoveryNamespace5AC2D2BE": {
+      "Type": "AWS::ServiceDiscovery::PrivateDnsNamespace",
+      "Properties": {
+        "Name": "service",
+        "Vpc": {
+          "Ref": "BaseVPCD45965B8"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/DefaultServiceDiscoveryNamespace/Resource"
+      }
+    },
+    "ECSClusterECSEC2CapacityInstanceSecurityGroupDAADD78F": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/InstanceSecurityGroup",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/ECSCluster/ECSEC2Capacity"
+          }
+        ],
+        "VpcId": {
+          "Ref": "BaseVPCD45965B8"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/InstanceSecurityGroup/Resource"
+      }
+    },
+    "ECSClusterECSEC2CapacityInstanceRole5C2EC45B": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ec2.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/ECSCluster/ECSEC2Capacity"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/InstanceRole/Resource"
+      }
+    },
+    "ECSClusterECSEC2CapacityInstanceRoleDefaultPolicy204B9A6A": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "ecs:CreateCluster",
+                "ecs:DeregisterContainerInstance",
+                "ecs:DiscoverPollEndpoint",
+                "ecs:Poll",
+                "ecs:RegisterContainerInstance",
+                "ecs:StartTelemetrySession",
+                "ecs:Submit*",
+                "ecr:GetAuthorizationToken",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "ECSClusterECSEC2CapacityInstanceRoleDefaultPolicy204B9A6A",
+        "Roles": [
+          {
+            "Ref": "ECSClusterECSEC2CapacityInstanceRole5C2EC45B"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/InstanceRole/DefaultPolicy/Resource"
+      }
+    },
+    "ECSClusterECSEC2CapacityInstanceProfileB82D3818": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Properties": {
+        "Roles": [
+          {
+            "Ref": "ECSClusterECSEC2CapacityInstanceRole5C2EC45B"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/InstanceProfile"
+      }
+    },
+    "ECSClusterECSEC2CapacityLaunchConfigC81E218C": {
+      "Type": "AWS::AutoScaling::LaunchConfiguration",
+      "Properties": {
+        "ImageId": {
+          "Ref": "SsmParameterValueawsserviceecsoptimizedamiamazonlinux2recommendedimageidC96584B6F00A464EAD1953AFF4B05118Parameter"
+        },
+        "InstanceType": "t3.small",
+        "IamInstanceProfile": {
+          "Ref": "ECSClusterECSEC2CapacityInstanceProfileB82D3818"
+        },
+        "SecurityGroups": [
+          {
+            "Fn::GetAtt": [
+              "ECSClusterECSEC2CapacityInstanceSecurityGroupDAADD78F",
+              "GroupId"
+            ]
+          }
+        ],
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "",
+              [
+                "#!/bin/bash\necho ECS_CLUSTER=",
+                {
+                  "Ref": "ECSCluster7D463CD4"
+                },
+                " >> /etc/ecs/ecs.config\nsudo iptables --insert FORWARD 1 --in-interface docker+ --destination 169.254.169.254/32 --jump DROP\nsudo service iptables save\necho ECS_AWSVPC_BLOCK_IMDS=true >> /etc/ecs/ecs.config"
+              ]
+            ]
+          }
+        }
+      },
+      "DependsOn": [
+        "ECSClusterECSEC2CapacityInstanceRoleDefaultPolicy204B9A6A",
+        "ECSClusterECSEC2CapacityInstanceRole5C2EC45B"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/LaunchConfig"
+      }
+    },
+    "ECSClusterECSEC2CapacityASG0360B1DE": {
+      "Type": "AWS::AutoScaling::AutoScalingGroup",
+      "Properties": {
+        "MaxSize": "10",
+        "MinSize": "0",
+        "LaunchConfigurationName": {
+          "Ref": "ECSClusterECSEC2CapacityLaunchConfigC81E218C"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "PropagateAtLaunch": true,
+            "Value": "ecsworkshop-base/ECSCluster/ECSEC2Capacity"
+          }
+        ],
+        "VPCZoneIdentifier": [
+          {
+            "Ref": "BaseVPCPrivateSubnet1SubnetF99B1DA5"
+          },
+          {
+            "Ref": "BaseVPCPrivateSubnet2Subnet88334406"
+          }
+        ]
+      },
+      "UpdatePolicy": {
+        "AutoScalingReplacingUpdate": {
+          "WillReplace": true
+        },
+        "AutoScalingScheduledAction": {
+          "IgnoreUnmodifiedGroupSizeProperties": true
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/ASG"
+      }
+    },
+    "ECSClusterECSEC2CapacityDrainECSHookFunctionServiceRole8F3CBCE3": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/ECSCluster/ECSEC2Capacity"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/DrainECSHook/Function/ServiceRole/Resource"
+      }
+    },
+    "ECSClusterECSEC2CapacityDrainECSHookFunctionServiceRoleDefaultPolicyBD54F91C": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "ec2:DescribeInstances",
+                "ec2:DescribeInstanceAttribute",
+                "ec2:DescribeInstanceStatus",
+                "ec2:DescribeHosts"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": "autoscaling:CompleteLifecycleAction",
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":autoscaling:us-west-1:334824919609:autoScalingGroup:*:autoScalingGroupName/",
+                    {
+                      "Ref": "ECSClusterECSEC2CapacityASG0360B1DE"
+                    }
+                  ]
+                ]
+              }
+            },
+            {
+              "Action": [
+                "ecs:DescribeContainerInstances",
+                "ecs:DescribeTasks"
+              ],
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": [
+                "ecs:ListContainerInstances",
+                "ecs:SubmitContainerStateChange",
+                "ecs:SubmitTaskStateChange"
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "ECSCluster7D463CD4",
+                  "Arn"
+                ]
+              }
+            },
+            {
+              "Action": [
+                "ecs:UpdateContainerInstancesState",
+                "ecs:ListTasks"
+              ],
+              "Condition": {
+                "ArnEquals": {
+                  "ecs:cluster": {
+                    "Fn::GetAtt": [
+                      "ECSCluster7D463CD4",
+                      "Arn"
+                    ]
+                  }
+                }
+              },
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "ECSClusterECSEC2CapacityDrainECSHookFunctionServiceRoleDefaultPolicyBD54F91C",
+        "Roles": [
+          {
+            "Ref": "ECSClusterECSEC2CapacityDrainECSHookFunctionServiceRole8F3CBCE3"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/DrainECSHook/Function/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "ECSClusterECSEC2CapacityDrainECSHookFunctionBC271921": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "ZipFile": "import boto3, json, os, time\n\necs = boto3.client('ecs')\nautoscaling = boto3.client('autoscaling')\n\n\ndef lambda_handler(event, context):\n  print(json.dumps(event))\n  cluster = os.environ['CLUSTER']\n  snsTopicArn = event['Records'][0]['Sns']['TopicArn']\n  lifecycle_event = json.loads(event['Records'][0]['Sns']['Message'])\n  instance_id = lifecycle_event.get('EC2InstanceId')\n  if not instance_id:\n    print('Got event without EC2InstanceId: %s', json.dumps(event))\n    return\n\n  instance_arn = container_instance_arn(cluster, instance_id)\n  print('Instance %s has container instance ARN %s' % (lifecycle_event['EC2InstanceId'], instance_arn))\n\n  if not instance_arn:\n    return\n\n  while has_tasks(cluster, instance_arn):\n    time.sleep(10)\n\n  try:\n    print('Terminating instance %s' % instance_id)\n    autoscaling.complete_lifecycle_action(\n        LifecycleActionResult='CONTINUE',\n        **pick(lifecycle_event, 'LifecycleHookName', 'LifecycleActionToken', 'AutoScalingGroupName'))\n  except Exception as e:\n    # Lifecycle action may have already completed.\n    print(str(e))\n\n\ndef container_instance_arn(cluster, instance_id):\n  \"\"\"Turn an instance ID into a container instance ARN.\"\"\"\n  arns = ecs.list_container_instances(cluster=cluster, filter='ec2InstanceId==' + instance_id)['containerInstanceArns']\n  if not arns:\n    return None\n  return arns[0]\n\n\ndef has_tasks(cluster, instance_arn):\n  \"\"\"Return True if the instance is running tasks for the given cluster.\"\"\"\n  instances = ecs.describe_container_instances(cluster=cluster, containerInstances=[instance_arn])['containerInstances']\n  if not instances:\n    return False\n  instance = instances[0]\n\n  if instance['status'] == 'ACTIVE':\n    # Start draining, then try again later\n    set_container_instance_to_draining(cluster, instance_arn)\n    return True\n\n  tasks = instance['runningTasksCount'] + instance['pendingTasksCount']\n  print('Instance %s has %s tasks' % (instance_arn, tasks))\n\n  return tasks > 0\n\n\ndef set_container_instance_to_draining(cluster, instance_arn):\n  ecs.update_container_instances_state(\n      cluster=cluster,\n      containerInstances=[instance_arn], status='DRAINING')\n\n\ndef pick(dct, *keys):\n  \"\"\"Pick a subset of a dict.\"\"\"\n  return {k: v for k, v in dct.items() if k in keys}\n"
+        },
+        "Handler": "index.lambda_handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "ECSClusterECSEC2CapacityDrainECSHookFunctionServiceRole8F3CBCE3",
+            "Arn"
+          ]
+        },
+        "Runtime": "python3.6",
+        "Environment": {
+          "Variables": {
+            "CLUSTER": {
+              "Ref": "ECSCluster7D463CD4"
+            }
+          }
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/ECSCluster/ECSEC2Capacity"
+          }
+        ],
+        "Timeout": 310
+      },
+      "DependsOn": [
+        "ECSClusterECSEC2CapacityDrainECSHookFunctionServiceRoleDefaultPolicyBD54F91C",
+        "ECSClusterECSEC2CapacityDrainECSHookFunctionServiceRole8F3CBCE3"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/DrainECSHook/Function/Resource"
+      }
+    },
+    "ECSClusterECSEC2CapacityDrainECSHookFunctionAllowInvokeecsworkshopbaseECSClusterECSEC2CapacityLifecycleHookDrainHookTopic6CB5717791CA5D6C": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "ECSClusterECSEC2CapacityDrainECSHookFunctionBC271921",
+            "Arn"
+          ]
+        },
+        "Principal": "sns.amazonaws.com",
+        "SourceArn": {
+          "Ref": "ECSClusterECSEC2CapacityLifecycleHookDrainHookTopicCA6236FC"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/DrainECSHook/Function/AllowInvoke:ecsworkshopbaseECSClusterECSEC2CapacityLifecycleHookDrainHookTopic6CB57177"
+      }
+    },
+    "ECSClusterECSEC2CapacityDrainECSHookFunctionTopicECD58342": {
+      "Type": "AWS::SNS::Subscription",
+      "Properties": {
+        "Protocol": "lambda",
+        "TopicArn": {
+          "Ref": "ECSClusterECSEC2CapacityLifecycleHookDrainHookTopicCA6236FC"
+        },
+        "Endpoint": {
+          "Fn::GetAtt": [
+            "ECSClusterECSEC2CapacityDrainECSHookFunctionBC271921",
+            "Arn"
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/DrainECSHook/Function/Topic/Resource"
+      }
+    },
+    "ECSClusterECSEC2CapacityLifecycleHookDrainHookRoleA957F608": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "autoscaling.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/ECSCluster/ECSEC2Capacity"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/LifecycleHookDrainHook/Role/Resource"
+      }
+    },
+    "ECSClusterECSEC2CapacityLifecycleHookDrainHookRoleDefaultPolicy94FDFE21": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sns:Publish",
+              "Effect": "Allow",
+              "Resource": {
+                "Ref": "ECSClusterECSEC2CapacityLifecycleHookDrainHookTopicCA6236FC"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "ECSClusterECSEC2CapacityLifecycleHookDrainHookRoleDefaultPolicy94FDFE21",
+        "Roles": [
+          {
+            "Ref": "ECSClusterECSEC2CapacityLifecycleHookDrainHookRoleA957F608"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/LifecycleHookDrainHook/Role/DefaultPolicy/Resource"
+      }
+    },
+    "ECSClusterECSEC2CapacityLifecycleHookDrainHookTopicCA6236FC": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "ecsworkshop-base/ECSCluster/ECSEC2Capacity"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/LifecycleHookDrainHook/Topic/Resource"
+      }
+    },
+    "ECSClusterECSEC2CapacityLifecycleHookDrainHook247A252F": {
+      "Type": "AWS::AutoScaling::LifecycleHook",
+      "Properties": {
+        "AutoScalingGroupName": {
+          "Ref": "ECSClusterECSEC2CapacityASG0360B1DE"
+        },
+        "LifecycleTransition": "autoscaling:EC2_INSTANCE_TERMINATING",
+        "DefaultResult": "CONTINUE",
+        "HeartbeatTimeout": 300,
+        "NotificationTargetARN": {
+          "Ref": "ECSClusterECSEC2CapacityLifecycleHookDrainHookTopicCA6236FC"
+        },
+        "RoleARN": {
+          "Fn::GetAtt": [
+            "ECSClusterECSEC2CapacityLifecycleHookDrainHookRoleA957F608",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "ECSClusterECSEC2CapacityLifecycleHookDrainHookRoleDefaultPolicy94FDFE21",
+        "ECSClusterECSEC2CapacityLifecycleHookDrainHookRoleA957F608"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/ECSCluster/ECSEC2Capacity/LifecycleHookDrainHook/Resource"
+      }
+    },
+    "FrontendToBackendSecurityGroup70D70E25": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Security group for frontend service to talk to backend services",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1"
+          }
+        ],
+        "VpcId": {
+          "Ref": "BaseVPCD45965B8"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/FrontendToBackendSecurityGroup/Resource"
+      }
+    },
+    "InboundSecGrp3000": {
+      "Type": "AWS::EC2::SecurityGroupIngress",
+      "Properties": {
+        "IpProtocol": "TCP",
+        "FromPort": 3000,
+        "GroupId": {
+          "Fn::GetAtt": [
+            "FrontendToBackendSecurityGroup70D70E25",
+            "GroupId"
+          ]
+        },
+        "SourceSecurityGroupId": {
+          "Fn::GetAtt": [
+            "FrontendToBackendSecurityGroup70D70E25",
+            "GroupId"
+          ]
+        },
+        "ToPort": 3000
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-base/InboundSecGrp3000"
+      }
+    }
+  },
+  "Parameters": {
+    "SsmParameterValueawsserviceecsoptimizedamiamazonlinux2recommendedimageidC96584B6F00A464EAD1953AFF4B05118Parameter": {
+      "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+      "Default": "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
+    }
+  },
+  "Outputs": {
+    "EC2AutoScalingGroupName": {
+      "Value": {
+        "Ref": "ECSClusterECSEC2CapacityASG0360B1DE"
+      },
+      "Export": {
+        "Name": "EC2ASGName"
+      }
+    },
+    "NSArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "ECSClusterDefaultServiceDiscoveryNamespace5AC2D2BE",
+          "Arn"
+        ]
+      },
+      "Export": {
+        "Name": "NSARN"
+      }
+    },
+    "NSName": {
+      "Value": "service",
+      "Export": {
+        "Name": "NSNAME"
+      }
+    },
+    "NSId": {
+      "Value": {
+        "Fn::GetAtt": [
+          "ECSClusterDefaultServiceDiscoveryNamespace5AC2D2BE",
+          "Id"
+        ]
+      },
+      "Export": {
+        "Name": "NSID"
+      }
+    },
+    "FE2BESecGrp": {
+      "Value": {
+        "Fn::GetAtt": [
+          "FrontendToBackendSecurityGroup70D70E25",
+          "GroupId"
+        ]
+      },
+      "Export": {
+        "Name": "SecGrpId"
+      }
+    },
+    "ECSClusterName": {
+      "Value": {
+        "Ref": "ECSCluster7D463CD4"
+      },
+      "Export": {
+        "Name": "ECSClusterName"
+      }
+    },
+    "ECSClusterSecGrp": {
+      "Value": {
+        "Fn::GetAtt": [
+          "ECSClusterECSEC2CapacityInstanceSecurityGroupDAADD78F",
+          "GroupId"
+        ]
+      },
+      "Export": {
+        "Name": "ECSSecGrpList"
+      }
+    },
+    "ServicesSecGrp": {
+      "Value": {
+        "Fn::GetAtt": [
+          "FrontendToBackendSecurityGroup70D70E25",
+          "GroupId"
+        ]
+      },
+      "Export": {
+        "Name": "ServicesSecGrp"
+      }
+    }
+  }
+}
