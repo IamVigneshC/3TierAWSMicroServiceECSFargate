@@ -1,0 +1,674 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree"
+      },
+      "ecsworkshop-frontend": {
+        "id": "ecsworkshop-frontend",
+        "path": "ecsworkshop-frontend",
+        "children": {
+          "ecsworkshop-frontend": {
+            "id": "ecsworkshop-frontend",
+            "path": "ecsworkshop-frontend/ecsworkshop-frontend",
+            "children": {
+              "VPC": {
+                "id": "VPC",
+                "path": "ecsworkshop-frontend/ecsworkshop-frontend/VPC",
+                "children": {
+                  "PublicSubnet1": {
+                    "id": "PublicSubnet1",
+                    "path": "ecsworkshop-frontend/ecsworkshop-frontend/VPC/PublicSubnet1"
+                  },
+                  "PublicSubnet2": {
+                    "id": "PublicSubnet2",
+                    "path": "ecsworkshop-frontend/ecsworkshop-frontend/VPC/PublicSubnet2"
+                  },
+                  "PrivateSubnet1": {
+                    "id": "PrivateSubnet1",
+                    "path": "ecsworkshop-frontend/ecsworkshop-frontend/VPC/PrivateSubnet1"
+                  },
+                  "PrivateSubnet2": {
+                    "id": "PrivateSubnet2",
+                    "path": "ecsworkshop-frontend/ecsworkshop-frontend/VPC/PrivateSubnet2"
+                  }
+                }
+              },
+              "SDNamespace": {
+                "id": "SDNamespace",
+                "path": "ecsworkshop-frontend/ecsworkshop-frontend/SDNamespace"
+              },
+              "ECSCluster": {
+                "id": "ECSCluster",
+                "path": "ecsworkshop-frontend/ecsworkshop-frontend/ECSCluster"
+              },
+              "ServicesSecGrp": {
+                "id": "ServicesSecGrp",
+                "path": "ecsworkshop-frontend/ecsworkshop-frontend/ServicesSecGrp",
+                "children": {
+                  "from ecsworkshopfrontendFrontendFargateLBServiceSecurityGroupCB94C867:frontendtobackend": {
+                    "id": "from ecsworkshopfrontendFrontendFargateLBServiceSecurityGroupCB94C867:frontendtobackend",
+                    "path": "ecsworkshop-frontend/ecsworkshop-frontend/ServicesSecGrp/from ecsworkshopfrontendFrontendFargateLBServiceSecurityGroupCB94C867:frontendtobackend",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroupIngress",
+                      "aws:cdk:cloudformation:props": {
+                        "ipProtocol": "tcp",
+                        "description": "from ecsworkshopfrontendFrontendFargateLBServiceSecurityGroupCB94C867:frontendtobackend",
+                        "fromPort": 3000,
+                        "groupId": {
+                          "Fn::ImportValue": "ServicesSecGrp"
+                        },
+                        "sourceSecurityGroupId": {
+                          "Fn::GetAtt": [
+                            "FrontendFargateLBServiceSecurityGroupD8FC4711",
+                            "GroupId"
+                          ]
+                        },
+                        "toPort": 3000
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "FrontendFargateLBService": {
+            "id": "FrontendFargateLBService",
+            "path": "ecsworkshop-frontend/FrontendFargateLBService",
+            "children": {
+              "LB": {
+                "id": "LB",
+                "path": "ecsworkshop-frontend/FrontendFargateLBService/LB",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ecsworkshop-frontend/FrontendFargateLBService/LB/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+                      "aws:cdk:cloudformation:props": {
+                        "scheme": "internet-facing",
+                        "securityGroups": [
+                          {
+                            "Fn::GetAtt": [
+                              "FrontendFargateLBServiceLBSecurityGroup49C30F65",
+                              "GroupId"
+                            ]
+                          }
+                        ],
+                        "subnets": [
+                          "subnet-03689657e2849a8fc",
+                          "subnet-051f9ae27f68f8f74"
+                        ],
+                        "type": "application"
+                      }
+                    }
+                  },
+                  "SecurityGroup": {
+                    "id": "SecurityGroup",
+                    "path": "ecsworkshop-frontend/FrontendFargateLBService/LB/SecurityGroup",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-frontend/FrontendFargateLBService/LB/SecurityGroup/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                          "aws:cdk:cloudformation:props": {
+                            "groupDescription": "Automatically created Security Group for ELB ecsworkshopfrontendFrontendFargateLBServiceLBD83D49CC",
+                            "securityGroupIngress": [
+                              {
+                                "cidrIp": "0.0.0.0/0",
+                                "ipProtocol": "tcp",
+                                "fromPort": 80,
+                                "toPort": 80,
+                                "description": "Allow from anyone on port 80"
+                              }
+                            ],
+                            "vpcId": "vpc-0cad99f4a01936d39"
+                          }
+                        }
+                      },
+                      "to ecsworkshopfrontendFrontendFargateLBServiceSecurityGroupCB94C867:3000": {
+                        "id": "to ecsworkshopfrontendFrontendFargateLBServiceSecurityGroupCB94C867:3000",
+                        "path": "ecsworkshop-frontend/FrontendFargateLBService/LB/SecurityGroup/to ecsworkshopfrontendFrontendFargateLBServiceSecurityGroupCB94C867:3000",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroupEgress",
+                          "aws:cdk:cloudformation:props": {
+                            "groupId": {
+                              "Fn::GetAtt": [
+                                "FrontendFargateLBServiceLBSecurityGroup49C30F65",
+                                "GroupId"
+                              ]
+                            },
+                            "ipProtocol": "tcp",
+                            "description": "Load balancer to target",
+                            "destinationSecurityGroupId": {
+                              "Fn::GetAtt": [
+                                "FrontendFargateLBServiceSecurityGroupD8FC4711",
+                                "GroupId"
+                              ]
+                            },
+                            "fromPort": 3000,
+                            "toPort": 3000
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "PublicListener": {
+                    "id": "PublicListener",
+                    "path": "ecsworkshop-frontend/FrontendFargateLBService/LB/PublicListener",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-frontend/FrontendFargateLBService/LB/PublicListener/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ElasticLoadBalancingV2::Listener",
+                          "aws:cdk:cloudformation:props": {
+                            "defaultActions": [
+                              {
+                                "type": "forward",
+                                "targetGroupArn": {
+                                  "Ref": "FrontendFargateLBServiceLBPublicListenerECSGroup84B65405"
+                                }
+                              }
+                            ],
+                            "loadBalancerArn": {
+                              "Ref": "FrontendFargateLBServiceLB58D972C7"
+                            },
+                            "port": 80,
+                            "protocol": "HTTP"
+                          }
+                        }
+                      },
+                      "ECSGroup": {
+                        "id": "ECSGroup",
+                        "path": "ecsworkshop-frontend/FrontendFargateLBService/LB/PublicListener/ECSGroup",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "ecsworkshop-frontend/FrontendFargateLBService/LB/PublicListener/ECSGroup/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+                              "aws:cdk:cloudformation:props": {
+                                "port": 80,
+                                "protocol": "HTTP",
+                                "targetType": "ip",
+                                "vpcId": "vpc-0cad99f4a01936d39"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "LoadBalancerDNS": {
+                "id": "LoadBalancerDNS",
+                "path": "ecsworkshop-frontend/FrontendFargateLBService/LoadBalancerDNS"
+              },
+              "ServiceURL": {
+                "id": "ServiceURL",
+                "path": "ecsworkshop-frontend/FrontendFargateLBService/ServiceURL"
+              },
+              "TaskDef": {
+                "id": "TaskDef",
+                "path": "ecsworkshop-frontend/FrontendFargateLBService/TaskDef",
+                "children": {
+                  "TaskRole": {
+                    "id": "TaskRole",
+                    "path": "ecsworkshop-frontend/FrontendFargateLBService/TaskDef/TaskRole",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-frontend/FrontendFargateLBService/TaskDef/TaskRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "ecs-tasks.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "ecsworkshop-frontend/FrontendFargateLBService/TaskDef/TaskRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "ecsworkshop-frontend/FrontendFargateLBService/TaskDef/TaskRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "ec2:DescribeSubnets",
+                                      "Effect": "Allow",
+                                      "Resource": "*"
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "FrontendFargateLBServiceTaskDefTaskRoleDefaultPolicy64DA05F5",
+                                "roles": [
+                                  {
+                                    "Ref": "FrontendFargateLBServiceTaskDefTaskRoleB15649C5"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ecsworkshop-frontend/FrontendFargateLBService/TaskDef/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ECS::TaskDefinition",
+                      "aws:cdk:cloudformation:props": {
+                        "containerDefinitions": [
+                          {
+                            "essential": true,
+                            "image": "adam9098/ecsdemo-frontend",
+                            "name": "web",
+                            "portMappings": [
+                              {
+                                "containerPort": 3000,
+                                "protocol": "tcp"
+                              }
+                            ],
+                            "logConfiguration": {
+                              "logDriver": "awslogs",
+                              "options": {
+                                "awslogs-group": {
+                                  "Ref": "FrontendFargateLBServiceTaskDefwebLogGroup3132F919"
+                                },
+                                "awslogs-stream-prefix": "FrontendFargateLBService",
+                                "awslogs-region": "us-west-1"
+                              }
+                            },
+                            "environment": [
+                              {
+                                "name": "CRYSTAL_URL",
+                                "value": "http://ecsdemo-crystal.service:3000/crystal"
+                              },
+                              {
+                                "name": "NODEJS_URL",
+                                "value": "http://ecsdemo-nodejs.service:3000"
+                              },
+                              {
+                                "name": "REGION",
+                                "value": "us-west-1"
+                              }
+                            ]
+                          }
+                        ],
+                        "cpu": "256",
+                        "executionRoleArn": {
+                          "Fn::GetAtt": [
+                            "FrontendFargateLBServiceTaskDefExecutionRole062B3EBD",
+                            "Arn"
+                          ]
+                        },
+                        "family": "ecsworkshopfrontendFrontendFargateLBServiceTaskDefDA36BB44",
+                        "memory": "512",
+                        "networkMode": "awsvpc",
+                        "requiresCompatibilities": [
+                          "FARGATE"
+                        ],
+                        "taskRoleArn": {
+                          "Fn::GetAtt": [
+                            "FrontendFargateLBServiceTaskDefTaskRoleB15649C5",
+                            "Arn"
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  "web": {
+                    "id": "web",
+                    "path": "ecsworkshop-frontend/FrontendFargateLBService/TaskDef/web",
+                    "children": {
+                      "LogGroup": {
+                        "id": "LogGroup",
+                        "path": "ecsworkshop-frontend/FrontendFargateLBService/TaskDef/web/LogGroup",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "ecsworkshop-frontend/FrontendFargateLBService/TaskDef/web/LogGroup/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
+                              "aws:cdk:cloudformation:props": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "ExecutionRole": {
+                    "id": "ExecutionRole",
+                    "path": "ecsworkshop-frontend/FrontendFargateLBService/TaskDef/ExecutionRole",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-frontend/FrontendFargateLBService/TaskDef/ExecutionRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "ecs-tasks.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "ecsworkshop-frontend/FrontendFargateLBService/TaskDef/ExecutionRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "ecsworkshop-frontend/FrontendFargateLBService/TaskDef/ExecutionRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": [
+                                        "logs:CreateLogStream",
+                                        "logs:PutLogEvents"
+                                      ],
+                                      "Effect": "Allow",
+                                      "Resource": {
+                                        "Fn::GetAtt": [
+                                          "FrontendFargateLBServiceTaskDefwebLogGroup3132F919",
+                                          "Arn"
+                                        ]
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "FrontendFargateLBServiceTaskDefExecutionRoleDefaultPolicy7E52740C",
+                                "roles": [
+                                  {
+                                    "Ref": "FrontendFargateLBServiceTaskDefExecutionRole062B3EBD"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "Service": {
+                "id": "Service",
+                "path": "ecsworkshop-frontend/FrontendFargateLBService/Service",
+                "children": {
+                  "Service": {
+                    "id": "Service",
+                    "path": "ecsworkshop-frontend/FrontendFargateLBService/Service/Service",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ECS::Service",
+                      "aws:cdk:cloudformation:props": {
+                        "cluster": {
+                          "Fn::ImportValue": "ECSClusterName"
+                        },
+                        "deploymentConfiguration": {
+                          "maximumPercent": 200,
+                          "minimumHealthyPercent": 50
+                        },
+                        "desiredCount": 3,
+                        "enableEcsManagedTags": false,
+                        "healthCheckGracePeriodSeconds": 60,
+                        "launchType": "FARGATE",
+                        "loadBalancers": [
+                          {
+                            "targetGroupArn": {
+                              "Ref": "FrontendFargateLBServiceLBPublicListenerECSGroup84B65405"
+                            },
+                            "containerName": "web",
+                            "containerPort": 3000
+                          }
+                        ],
+                        "networkConfiguration": {
+                          "awsvpcConfiguration": {
+                            "assignPublicIp": "DISABLED",
+                            "subnets": [
+                              "subnet-06edaab92837bf818",
+                              "subnet-01e13cf6b1ec8718c"
+                            ],
+                            "securityGroups": [
+                              {
+                                "Fn::GetAtt": [
+                                  "FrontendFargateLBServiceSecurityGroupD8FC4711",
+                                  "GroupId"
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "serviceName": "ecsdemo-frontend",
+                        "serviceRegistries": [
+                          {
+                            "registryArn": {
+                              "Fn::GetAtt": [
+                                "FrontendFargateLBServiceCloudmapService233A640D",
+                                "Arn"
+                              ]
+                            }
+                          }
+                        ],
+                        "taskDefinition": {
+                          "Ref": "FrontendFargateLBServiceTaskDef4A760E09"
+                        }
+                      }
+                    }
+                  },
+                  "CloudmapService": {
+                    "id": "CloudmapService",
+                    "path": "ecsworkshop-frontend/FrontendFargateLBService/Service/CloudmapService",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-frontend/FrontendFargateLBService/Service/CloudmapService/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::ServiceDiscovery::Service",
+                          "aws:cdk:cloudformation:props": {
+                            "dnsConfig": {
+                              "dnsRecords": [
+                                {
+                                  "type": "A",
+                                  "ttl": 60
+                                }
+                              ],
+                              "namespaceId": {
+                                "Fn::ImportValue": "NSID"
+                              },
+                              "routingPolicy": "MULTIVALUE"
+                            },
+                            "healthCheckCustomConfig": {
+                              "failureThreshold": 1
+                            },
+                            "namespaceId": {
+                              "Fn::ImportValue": "NSID"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "SecurityGroup": {
+                    "id": "SecurityGroup",
+                    "path": "ecsworkshop-frontend/FrontendFargateLBService/Service/SecurityGroup",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-frontend/FrontendFargateLBService/Service/SecurityGroup/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                          "aws:cdk:cloudformation:props": {
+                            "groupDescription": "ecsworkshop-frontend/FrontendFargateLBService/Service/SecurityGroup",
+                            "securityGroupEgress": [
+                              {
+                                "cidrIp": "0.0.0.0/0",
+                                "description": "Allow all outbound traffic by default",
+                                "ipProtocol": "-1"
+                              }
+                            ],
+                            "vpcId": "vpc-0cad99f4a01936d39"
+                          }
+                        }
+                      },
+                      "from ecsworkshopfrontendFrontendFargateLBServiceLBSecurityGroup5A33FBD5:3000": {
+                        "id": "from ecsworkshopfrontendFrontendFargateLBServiceLBSecurityGroup5A33FBD5:3000",
+                        "path": "ecsworkshop-frontend/FrontendFargateLBService/Service/SecurityGroup/from ecsworkshopfrontendFrontendFargateLBServiceLBSecurityGroup5A33FBD5:3000",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroupIngress",
+                          "aws:cdk:cloudformation:props": {
+                            "ipProtocol": "tcp",
+                            "description": "Load balancer to target",
+                            "fromPort": 3000,
+                            "groupId": {
+                              "Fn::GetAtt": [
+                                "FrontendFargateLBServiceSecurityGroupD8FC4711",
+                                "GroupId"
+                              ]
+                            },
+                            "sourceSecurityGroupId": {
+                              "Fn::GetAtt": [
+                                "FrontendFargateLBServiceLBSecurityGroup49C30F65",
+                                "GroupId"
+                              ]
+                            },
+                            "toPort": 3000
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "ScalingRole": {
+                    "id": "ScalingRole",
+                    "path": "ecsworkshop-frontend/FrontendFargateLBService/Service/ScalingRole"
+                  },
+                  "TaskCount": {
+                    "id": "TaskCount",
+                    "path": "ecsworkshop-frontend/FrontendFargateLBService/Service/TaskCount",
+                    "children": {
+                      "Target": {
+                        "id": "Target",
+                        "path": "ecsworkshop-frontend/FrontendFargateLBService/Service/TaskCount/Target",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "ecsworkshop-frontend/FrontendFargateLBService/Service/TaskCount/Target/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::ApplicationAutoScaling::ScalableTarget",
+                              "aws:cdk:cloudformation:props": {
+                                "maxCapacity": 10,
+                                "minCapacity": 1,
+                                "resourceId": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "service/",
+                                      {
+                                        "Fn::ImportValue": "ECSClusterName"
+                                      },
+                                      "/",
+                                      {
+                                        "Fn::GetAtt": [
+                                          "FrontendFargateLBService5D4043A4",
+                                          "Name"
+                                        ]
+                                      }
+                                    ]
+                                  ]
+                                },
+                                "roleArn": {
+                                  "Fn::Join": [
+                                    "",
+                                    [
+                                      "arn:",
+                                      {
+                                        "Ref": "AWS::Partition"
+                                      },
+                                      ":iam::334824919609:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService"
+                                    ]
+                                  ]
+                                },
+                                "scalableDimension": "ecs:service:DesiredCount",
+                                "serviceNamespace": "ecs"
+                              }
+                            }
+                          },
+                          "CPUAutoscaling": {
+                            "id": "CPUAutoscaling",
+                            "path": "ecsworkshop-frontend/FrontendFargateLBService/Service/TaskCount/Target/CPUAutoscaling",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "ecsworkshop-frontend/FrontendFargateLBService/Service/TaskCount/Target/CPUAutoscaling/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::ApplicationAutoScaling::ScalingPolicy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyName": "ecsworkshopfrontendFrontendFargateLBServiceTaskCountTargetCPUAutoscaling8FFC808D",
+                                    "policyType": "TargetTrackingScaling",
+                                    "scalingTargetId": {
+                                      "Ref": "FrontendFargateLBServiceTaskCountTarget1D6B1EF1"
+                                    },
+                                    "targetTrackingScalingPolicyConfiguration": {
+                                      "predefinedMetricSpecification": {
+                                        "predefinedMetricType": "ECSServiceAverageCPUUtilization"
+                                      },
+                                      "scaleInCooldown": 30,
+                                      "scaleOutCooldown": 30,
+                                      "targetValue": 50
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
