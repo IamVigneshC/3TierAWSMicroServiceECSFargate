@@ -1,0 +1,28 @@
+version: "3.4"
+services:
+  web:
+    environment:
+      AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /creds
+      CRYSTAL_URL: http://CrystalServiceContainerDef:3000/crystal
+      ECS_CONTAINER_METADATA_URI: http://169.254.170.2/v3
+      NODEJS_URL: http://NodeServiceContainerDef:3000
+      REGION: us-west-1
+    image: adam9098/ecsdemo-frontend
+    labels:
+      ecs-local.task-definition-input.type: remote
+      ecs-local.task-definition-input.value: arn:aws:ecs:us-west-1:334824919609:task-definition/ecsworkshopfrontendFrontendFargateLBServiceTaskDefDA36BB44:1
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: ecsworkshop-frontend-FrontendFargateLBServiceTaskDefwebLogGroup3132F919-j30DFPhsnZOa
+        awslogs-region: us-west-1
+        awslogs-stream-prefix: FrontendFargateLBService
+    networks:
+      ecs-local-network: null
+    ports:
+    - target: 3000
+      published: 8080
+      protocol: tcp
+networks:
+  ecs-local-network:
+    external: true
