@@ -1,0 +1,354 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree"
+      },
+      "ecsworkshop-nodejs": {
+        "id": "ecsworkshop-nodejs",
+        "path": "ecsworkshop-nodejs",
+        "children": {
+          "ecsworkshop-nodejs": {
+            "id": "ecsworkshop-nodejs",
+            "path": "ecsworkshop-nodejs/ecsworkshop-nodejs",
+            "children": {
+              "VPC": {
+                "id": "VPC",
+                "path": "ecsworkshop-nodejs/ecsworkshop-nodejs/VPC",
+                "children": {
+                  "PublicSubnet1": {
+                    "id": "PublicSubnet1",
+                    "path": "ecsworkshop-nodejs/ecsworkshop-nodejs/VPC/PublicSubnet1"
+                  },
+                  "PublicSubnet2": {
+                    "id": "PublicSubnet2",
+                    "path": "ecsworkshop-nodejs/ecsworkshop-nodejs/VPC/PublicSubnet2"
+                  },
+                  "PrivateSubnet1": {
+                    "id": "PrivateSubnet1",
+                    "path": "ecsworkshop-nodejs/ecsworkshop-nodejs/VPC/PrivateSubnet1"
+                  },
+                  "PrivateSubnet2": {
+                    "id": "PrivateSubnet2",
+                    "path": "ecsworkshop-nodejs/ecsworkshop-nodejs/VPC/PrivateSubnet2"
+                  }
+                }
+              },
+              "SDNamespace": {
+                "id": "SDNamespace",
+                "path": "ecsworkshop-nodejs/ecsworkshop-nodejs/SDNamespace"
+              },
+              "ECSCluster": {
+                "id": "ECSCluster",
+                "path": "ecsworkshop-nodejs/ecsworkshop-nodejs/ECSCluster"
+              },
+              "ServicesSecGrp": {
+                "id": "ServicesSecGrp",
+                "path": "ecsworkshop-nodejs/ecsworkshop-nodejs/ServicesSecGrp"
+              }
+            }
+          },
+          "TaskDef": {
+            "id": "TaskDef",
+            "path": "ecsworkshop-nodejs/TaskDef",
+            "children": {
+              "TaskRole": {
+                "id": "TaskRole",
+                "path": "ecsworkshop-nodejs/TaskDef/TaskRole",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ecsworkshop-nodejs/TaskDef/TaskRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "ecs-tasks.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "ecsworkshop-nodejs/TaskDef/TaskRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-nodejs/TaskDef/TaskRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "ec2:DescribeSubnets",
+                                  "Effect": "Allow",
+                                  "Resource": "*"
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "TaskDefTaskRoleDefaultPolicyA592CB18",
+                            "roles": [
+                              {
+                                "Ref": "TaskDefTaskRole1EDB4A67"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "ecsworkshop-nodejs/TaskDef/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ECS::TaskDefinition",
+                  "aws:cdk:cloudformation:props": {
+                    "containerDefinitions": [
+                      {
+                        "essential": true,
+                        "image": "brentley/ecsdemo-nodejs:cdk",
+                        "memoryReservation": 512,
+                        "name": "NodeServiceContainerDef",
+                        "portMappings": [
+                          {
+                            "containerPort": 3000,
+                            "protocol": "tcp"
+                          }
+                        ],
+                        "logConfiguration": {
+                          "logDriver": "awslogs",
+                          "options": {
+                            "awslogs-group": {
+                              "Ref": "TaskDefNodeServiceContainerDefLogGroup7CC90673"
+                            },
+                            "awslogs-stream-prefix": "ecsworkshop-nodejs",
+                            "awslogs-region": "us-west-1"
+                          }
+                        },
+                        "environment": [
+                          {
+                            "name": "REGION",
+                            "value": "us-west-1"
+                          }
+                        ]
+                      }
+                    ],
+                    "cpu": "256",
+                    "executionRoleArn": {
+                      "Fn::GetAtt": [
+                        "TaskDefExecutionRoleB4775C97",
+                        "Arn"
+                      ]
+                    },
+                    "family": "ecsworkshopnodejsTaskDef2754560E",
+                    "memory": "512",
+                    "networkMode": "awsvpc",
+                    "requiresCompatibilities": [
+                      "EC2",
+                      "FARGATE"
+                    ],
+                    "taskRoleArn": {
+                      "Fn::GetAtt": [
+                        "TaskDefTaskRole1EDB4A67",
+                        "Arn"
+                      ]
+                    }
+                  }
+                }
+              },
+              "NodeServiceContainerDef": {
+                "id": "NodeServiceContainerDef",
+                "path": "ecsworkshop-nodejs/TaskDef/NodeServiceContainerDef",
+                "children": {
+                  "LogGroup": {
+                    "id": "LogGroup",
+                    "path": "ecsworkshop-nodejs/TaskDef/NodeServiceContainerDef/LogGroup",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-nodejs/TaskDef/NodeServiceContainerDef/LogGroup/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::Logs::LogGroup",
+                          "aws:cdk:cloudformation:props": {}
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "ExecutionRole": {
+                "id": "ExecutionRole",
+                "path": "ecsworkshop-nodejs/TaskDef/ExecutionRole",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ecsworkshop-nodejs/TaskDef/ExecutionRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "ecs-tasks.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "ecsworkshop-nodejs/TaskDef/ExecutionRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "ecsworkshop-nodejs/TaskDef/ExecutionRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "logs:CreateLogStream",
+                                    "logs:PutLogEvents"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::GetAtt": [
+                                      "TaskDefNodeServiceContainerDefLogGroup7CC90673",
+                                      "Arn"
+                                    ]
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "TaskDefExecutionRoleDefaultPolicy0DBB737A",
+                            "roles": [
+                              {
+                                "Ref": "TaskDefExecutionRoleB4775C97"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "NodejsFargateService": {
+            "id": "NodejsFargateService",
+            "path": "ecsworkshop-nodejs/NodejsFargateService",
+            "children": {
+              "Service": {
+                "id": "Service",
+                "path": "ecsworkshop-nodejs/NodejsFargateService/Service",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::ECS::Service",
+                  "aws:cdk:cloudformation:props": {
+                    "cluster": {
+                      "Fn::ImportValue": "ECSClusterName"
+                    },
+                    "deploymentConfiguration": {
+                      "maximumPercent": 200,
+                      "minimumHealthyPercent": 50
+                    },
+                    "desiredCount": 3,
+                    "enableEcsManagedTags": false,
+                    "launchType": "FARGATE",
+                    "networkConfiguration": {
+                      "awsvpcConfiguration": {
+                        "assignPublicIp": "DISABLED",
+                        "subnets": [
+                          "subnet-06edaab92837bf818",
+                          "subnet-01e13cf6b1ec8718c"
+                        ],
+                        "securityGroups": [
+                          {
+                            "Fn::ImportValue": "ServicesSecGrp"
+                          }
+                        ]
+                      }
+                    },
+                    "serviceRegistries": [
+                      {
+                        "registryArn": {
+                          "Fn::GetAtt": [
+                            "NodejsFargateServiceCloudmapService30F43800",
+                            "Arn"
+                          ]
+                        }
+                      }
+                    ],
+                    "taskDefinition": {
+                      "Ref": "TaskDef54694570"
+                    }
+                  }
+                }
+              },
+              "CloudmapService": {
+                "id": "CloudmapService",
+                "path": "ecsworkshop-nodejs/NodejsFargateService/CloudmapService",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "ecsworkshop-nodejs/NodejsFargateService/CloudmapService/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::ServiceDiscovery::Service",
+                      "aws:cdk:cloudformation:props": {
+                        "dnsConfig": {
+                          "dnsRecords": [
+                            {
+                              "type": "A",
+                              "ttl": 60
+                            }
+                          ],
+                          "namespaceId": {
+                            "Fn::ImportValue": "NSID"
+                          },
+                          "routingPolicy": "MULTIVALUE"
+                        },
+                        "healthCheckCustomConfig": {
+                          "failureThreshold": 1
+                        },
+                        "name": "ecsdemo-nodejs",
+                        "namespaceId": {
+                          "Fn::ImportValue": "NSID"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

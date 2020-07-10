@@ -1,0 +1,238 @@
+{
+  "Resources": {
+    "TaskDefTaskRole1EDB4A67": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ecs-tasks.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-nodejs/TaskDef/TaskRole/Resource"
+      }
+    },
+    "TaskDefTaskRoleDefaultPolicyA592CB18": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "ec2:DescribeSubnets",
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "TaskDefTaskRoleDefaultPolicyA592CB18",
+        "Roles": [
+          {
+            "Ref": "TaskDefTaskRole1EDB4A67"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-nodejs/TaskDef/TaskRole/DefaultPolicy/Resource"
+      }
+    },
+    "TaskDef54694570": {
+      "Type": "AWS::ECS::TaskDefinition",
+      "Properties": {
+        "ContainerDefinitions": [
+          {
+            "Environment": [
+              {
+                "Name": "REGION",
+                "Value": "us-west-1"
+              }
+            ],
+            "Essential": true,
+            "Image": "brentley/ecsdemo-nodejs:cdk",
+            "LogConfiguration": {
+              "LogDriver": "awslogs",
+              "Options": {
+                "awslogs-group": {
+                  "Ref": "TaskDefNodeServiceContainerDefLogGroup7CC90673"
+                },
+                "awslogs-stream-prefix": "ecsworkshop-nodejs",
+                "awslogs-region": "us-west-1"
+              }
+            },
+            "MemoryReservation": 512,
+            "Name": "NodeServiceContainerDef",
+            "PortMappings": [
+              {
+                "ContainerPort": 3000,
+                "Protocol": "tcp"
+              }
+            ]
+          }
+        ],
+        "Cpu": "256",
+        "ExecutionRoleArn": {
+          "Fn::GetAtt": [
+            "TaskDefExecutionRoleB4775C97",
+            "Arn"
+          ]
+        },
+        "Family": "ecsworkshopnodejsTaskDef2754560E",
+        "Memory": "512",
+        "NetworkMode": "awsvpc",
+        "RequiresCompatibilities": [
+          "EC2",
+          "FARGATE"
+        ],
+        "TaskRoleArn": {
+          "Fn::GetAtt": [
+            "TaskDefTaskRole1EDB4A67",
+            "Arn"
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-nodejs/TaskDef/Resource"
+      }
+    },
+    "TaskDefNodeServiceContainerDefLogGroup7CC90673": {
+      "Type": "AWS::Logs::LogGroup",
+      "UpdateReplacePolicy": "Retain",
+      "DeletionPolicy": "Retain",
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-nodejs/TaskDef/NodeServiceContainerDef/LogGroup/Resource"
+      }
+    },
+    "TaskDefExecutionRoleB4775C97": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ecs-tasks.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-nodejs/TaskDef/ExecutionRole/Resource"
+      }
+    },
+    "TaskDefExecutionRoleDefaultPolicy0DBB737A": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "TaskDefNodeServiceContainerDefLogGroup7CC90673",
+                  "Arn"
+                ]
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "TaskDefExecutionRoleDefaultPolicy0DBB737A",
+        "Roles": [
+          {
+            "Ref": "TaskDefExecutionRoleB4775C97"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-nodejs/TaskDef/ExecutionRole/DefaultPolicy/Resource"
+      }
+    },
+    "NodejsFargateService948C9DA8": {
+      "Type": "AWS::ECS::Service",
+      "Properties": {
+        "Cluster": {
+          "Fn::ImportValue": "ECSClusterName"
+        },
+        "DeploymentConfiguration": {
+          "MaximumPercent": 200,
+          "MinimumHealthyPercent": 50
+        },
+        "DesiredCount": 3,
+        "EnableECSManagedTags": false,
+        "LaunchType": "FARGATE",
+        "NetworkConfiguration": {
+          "AwsvpcConfiguration": {
+            "AssignPublicIp": "DISABLED",
+            "SecurityGroups": [
+              {
+                "Fn::ImportValue": "ServicesSecGrp"
+              }
+            ],
+            "Subnets": [
+              "subnet-06edaab92837bf818",
+              "subnet-01e13cf6b1ec8718c"
+            ]
+          }
+        },
+        "ServiceRegistries": [
+          {
+            "RegistryArn": {
+              "Fn::GetAtt": [
+                "NodejsFargateServiceCloudmapService30F43800",
+                "Arn"
+              ]
+            }
+          }
+        ],
+        "TaskDefinition": {
+          "Ref": "TaskDef54694570"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-nodejs/NodejsFargateService/Service"
+      }
+    },
+    "NodejsFargateServiceCloudmapService30F43800": {
+      "Type": "AWS::ServiceDiscovery::Service",
+      "Properties": {
+        "DnsConfig": {
+          "DnsRecords": [
+            {
+              "TTL": 60,
+              "Type": "A"
+            }
+          ],
+          "NamespaceId": {
+            "Fn::ImportValue": "NSID"
+          },
+          "RoutingPolicy": "MULTIVALUE"
+        },
+        "HealthCheckCustomConfig": {
+          "FailureThreshold": 1
+        },
+        "Name": "ecsdemo-nodejs",
+        "NamespaceId": {
+          "Fn::ImportValue": "NSID"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "ecsworkshop-nodejs/NodejsFargateService/CloudmapService/Resource"
+      }
+    }
+  }
+}
